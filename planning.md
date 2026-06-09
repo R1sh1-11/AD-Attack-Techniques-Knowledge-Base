@@ -4,7 +4,7 @@
 
 ## Domain
 
-This project builds a RAG system over Active Directory attack and defense knowledge drawn from MITRE ATT&CK and CISA advisories. This knowledge exists across dozens of scattered technical pages — security practitioners waste time cross-referencing multiple sources to answer questions like "how is this attack detected?" or "what mitigations exist?" A searchable, grounded Q&A system makes this operationally useful.
+This project builds a RAG system over Active Directory attack and defense knowledge drawn from MITRE ATT&CK and CISA advisories. This knowledge exists across dozens of scattered technical pages and this makes security practitioners waste time cross-referencing multiple sources to answer questions like "how is this attack detected?" or "what mitigations exist?" A searchable, grounded Q&A system makes this operationally useful.
 
 ---
 
