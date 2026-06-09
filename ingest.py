@@ -1,5 +1,21 @@
 import os
 import json
+import re
+
+def clean_text(text):
+    # Remove reference sections
+    text = re.sub(r'References\n.*', '', text, flags=re.DOTALL)
+    # Remove sub-technique navigation tables
+    text = re.sub(r'Other sub-techniques.*?Ccache Files\n', '', text, flags=re.DOTALL)
+    # Remove ID/Name table rows like "T1558.001    Golden Ticket"
+    text = re.sub(r'T\d{4}(\.\d{3})?\s+\S.*\n', '', text)
+    # Remove ATT&CK ID rows like "G0096   APT41"
+    text = re.sub(r'[GS]\d{4}\s+\S.*\n', '', text)
+    # Remove citation numbers like [1][2]
+    text = re.sub(r'\[\d+\]', '', text)
+    # Collapse multiple blank lines
+    text = re.sub(r'\n{3,}', '\n\n', text)
+    return text.strip()
 
 DOCUMENTS_DIR = "documents"
 OUTPUT_FILE = "chunks.json"
@@ -13,7 +29,8 @@ def load_documents():
         filepath = os.path.join(DOCUMENTS_DIR, filename)
         if filename.endswith(".txt"):
             with open(filepath, "r", encoding="utf-8") as f:
-                text = f.read()
+                raw_text = f.read()  # 1. Read the file content first
+                text = clean_text(raw_text)  # 2. Clean it up
             documents.append({"source": filename, "text": text})
     print(f"Loaded {len(documents)} documents")
     return documents
@@ -41,11 +58,12 @@ def build_chunks(documents):
     for doc in documents:
         chunks = chunk_text(doc["text"])
         for i, chunk in enumerate(chunks):
-            all_chunks.append({
-                "source": doc["source"],
-                "chunk_index": i,
-                "text": chunk
-            })
+            if len(chunk) > 150:  # ADD THIS LINE
+                all_chunks.append({
+                    "source": doc["source"],
+                    "chunk_index": i,
+                    "text": chunk
+                })
     print(f"Total chunks: {len(all_chunks)}")
     return all_chunks
 

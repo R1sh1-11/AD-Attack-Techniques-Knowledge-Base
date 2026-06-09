@@ -2,12 +2,12 @@
   {
     "source": "Access-Token-Manipulation.txt",
     "chunk_index": 0,
-    "text": "Access Token Manipulation\nSub-techniques (5)\nID\tName\nT1134.001\tToken Impersonation/Theft\nT1134.002\tCreate Process with Token\nT1134.003\tMake and Impersonate Token\nT1134.004\tParent PID Spoofing\nT1134.005\tSID-History Injection\nAdversaries may modify access tokens to operate under a different user or system security context to perform actions and bypass access controls. Windows uses access tokens to determine the ownership of a running process. A user can manipulate access tokens to make a running p"
+    "text": "Access Token Manipulation\nSub-techniques (5)\nID\tName\nAdversaries may modify access tokens to operate under a different user or system security context to perform actions and bypass access controls. Windows uses access tokens to determine the ownership of a running process. A user can manipulate access tokens to make a running process appear as though it is the child of a different process or belongs to someone other than the user that started the process. When this occurs, the process also takes"
   },
   {
     "source": "Access-Token-Manipulation.txt",
     "chunk_index": 1,
-    "text": "etermine the ownership of a running process. A user can manipulate access tokens to make a running process appear as though it is the child of a different process or belongs to someone other than the user that started the process. When this occurs, the process also takes on the security context associated with the new token."
+    "text": "gs to someone other than the user that started the process. When this occurs, the process also takes on the security context associated with the new token."
   },
   {
     "source": "Access-Token-Manipulation.txt",
@@ -17,7 +17,7 @@
   {
     "source": "Access-Token-Manipulation.txt",
     "chunk_index": 3,
-    "text": "es commonly use token stealing to elevate their security context from the administrator level to the SYSTEM level. An adversary can then use a token to authenticate to a remote system as the account for that token if the account has appropriate permissions on the remote system.[1]"
+    "text": "es commonly use token stealing to elevate their security context from the administrator level to the SYSTEM level. An adversary can then use a token to authenticate to a remote system as the account for that token if the account has appropriate permissions on the remote system."
   },
   {
     "source": "Access-Token-Manipulation.txt",
@@ -27,157 +27,62 @@
   {
     "source": "Access-Token-Manipulation.txt",
     "chunk_index": 5,
-    "text": "ID: T1134\nSub-techniques:  T1134.001, T1134.002, T1134.003, T1134.004, T1134.005\n\u24d8\nTactics: Stealth, Privilege Escalation\n\u24d8\nPlatforms: Windows\nContributors: Jared Atkinson, @jaredcatkinson; Robby Winchester, @robwinchester3; Tom Ueltschi @c_APT_ure; Travis Smith, Tripwire\nVersion: 3.0\nCreated: 14 December 2017\nLast Modified: 12 May 2026\nVersion Permalink\nProcedure Examples\nID\tName\tDescription\nS0622\tAppleSeed\t\nAppleSeed can gain system level privilege by passing SeDebugPrivilege to the AdjustToke"
-  },
-  {
-    "source": "Access-Token-Manipulation.txt",
-    "chunk_index": 6,
-    "text": "2\tAppleSeed\t\nAppleSeed can gain system level privilege by passing SeDebugPrivilege to the AdjustTokenPrivilege API.[2]"
+    "text": "ID: \u24d8\nTactics: Stealth, Privilege Escalation\n\u24d8\nPlatforms: Windows\nContributors: Jared Atkinson, @jaredcatkinson; Robby Winchester, @robwinchester3; Tom Ueltschi @c_APT_ure; Travis Smith, Tripwire\nVersion: 3.0\nCreated: 14 December 2017\nLast Modified: 12 May 2026\nVersion Permalink\nProcedure Examples\nID\tName\tDescription\nAppleSeed can gain system level privilege by passing SeDebugPrivilege to the AdjustTokenPrivilege API."
   },
   {
     "source": "Access-Token-Manipulation.txt",
     "chunk_index": 7,
-    "text": "S1068\tBlackCat\t\nBlackCat has the ability modify access tokens.[3][4]"
+    "text": "Blue Mockingbird has used JuicyPotato to abuse the SeImpersonate token privilege to escalate from web application pool accounts to NT Authority\\SYSTEM."
   },
   {
     "source": "Access-Token-Manipulation.txt",
     "chunk_index": 8,
-    "text": "G0108\tBlue Mockingbird\t\nBlue Mockingbird has used JuicyPotato to abuse the SeImpersonate token privilege to escalate from web application pool accounts to NT Authority\\SYSTEM.[5]"
-  },
-  {
-    "source": "Access-Token-Manipulation.txt",
-    "chunk_index": 9,
-    "text": "C0017\tC0017\t\nDuring C0017, APT41 used a ConfuserEx obfuscated BADPOTATO exploit to abuse named-pipe impersonation for local NT AUTHORITY\\SYSTEM privilege escalation.[6]"
+    "text": "C0017\tC0017\t\nDuring C0017, APT41 used a ConfuserEx obfuscated BADPOTATO exploit to abuse named-pipe impersonation for local NT AUTHORITY\\SYSTEM privilege escalation."
   },
   {
     "source": "Access-Token-Manipulation.txt",
     "chunk_index": 10,
-    "text": "S0625\tCuba\t\nCuba has used SeDebugPrivilege and AdjustTokenPrivileges to elevate privileges.[7]"
-  },
-  {
-    "source": "Access-Token-Manipulation.txt",
-    "chunk_index": 11,
-    "text": "S0038\tDuqu\t\nDuqu examines running system processes for tokens that have specific system privileges. If it finds one, it will copy the token and store it for later use. Eventually it will start new processes with the stored token attached. It can also steal tokens to acquire administrative privileges.[8]"
-  },
-  {
-    "source": "Access-Token-Manipulation.txt",
-    "chunk_index": 12,
-    "text": "S0363\tEmpire\t\nEmpire can use PowerSploit's Invoke-TokenManipulation to manipulate access tokens.[9]"
-  },
-  {
-    "source": "Access-Token-Manipulation.txt",
-    "chunk_index": 13,
-    "text": "G0037\tFIN6\t\nFIN6 has used has used Metasploit\u2019s named-pipe impersonation technique to escalate privileges.[10]"
+    "text": "Duqu examines running system processes for tokens that have specific system privileges. If it finds one, it will copy the token and store it for later use. Eventually it will start new processes with the stored token attached. It can also steal tokens to acquire administrative privileges."
   },
   {
     "source": "Access-Token-Manipulation.txt",
     "chunk_index": 14,
-    "text": "S0666\tGelsemium\t\nGelsemium can use token manipulation to bypass UAC on Windows7 systems.[11]"
-  },
-  {
-    "source": "Access-Token-Manipulation.txt",
-    "chunk_index": 15,
-    "text": "S0697\tHermeticWiper\t\nHermeticWiper can use AdjustTokenPrivileges to grant itself privileges for debugging with SeDebugPrivilege, creating backups with SeBackupPrivilege, loading drivers with SeLoadDriverPrivilege, and shutting down a local system with SeShutdownPrivilege.[12][13]"
+    "text": "HermeticWiper can use AdjustTokenPrivileges to grant itself privileges for debugging with SeDebugPrivilege, creating backups with SeBackupPrivilege, loading drivers with SeLoadDriverPrivilege, and shutting down a local system with SeShutdownPrivilege."
   },
   {
     "source": "Access-Token-Manipulation.txt",
     "chunk_index": 16,
-    "text": "S0203\tHydraq\t\nHydraq creates a backdoor through which remote attackers can adjust token privileges.[14]"
-  },
-  {
-    "source": "Access-Token-Manipulation.txt",
-    "chunk_index": 17,
-    "text": "S0607\tKillDisk\t\nKillDisk has attempted to get the access token of a process by calling OpenProcessToken. If KillDisk gets the access token, then it attempt to modify the token privileges with AdjustTokenPrivileges.[15]"
-  },
-  {
-    "source": "Access-Token-Manipulation.txt",
-    "chunk_index": 18,
-    "text": "G0030\tLotus Blossom\t\nLotus Blossom has retrieved process tokens for processes to adjust the privileges of the launch process or other items.[16]"
-  },
-  {
-    "source": "Access-Token-Manipulation.txt",
-    "chunk_index": 19,
-    "text": "S1060\tMafalda\t\nMafalda can use AdjustTokenPrivileges() to elevate privileges.[17]"
-  },
-  {
-    "source": "Access-Token-Manipulation.txt",
-    "chunk_index": 20,
-    "text": "S0576\tMegaCortex\t\nMegaCortex can enable SeDebugPrivilege and adjust token privileges.[18]"
-  },
-  {
-    "source": "Access-Token-Manipulation.txt",
-    "chunk_index": 21,
-    "text": "S0378\tPoshC2\t\nPoshC2 can use Invoke-TokenManipulation for manipulating tokens.[19]"
-  },
-  {
-    "source": "Access-Token-Manipulation.txt",
-    "chunk_index": 22,
-    "text": "S0194\tPowerSploit\t\nPowerSploit's Invoke-TokenManipulation Exfiltration module can be used to manipulate tokens.[20][21]"
-  },
-  {
-    "source": "Access-Token-Manipulation.txt",
-    "chunk_index": 23,
-    "text": "S1242\tQilin\t\nQilin can use an embedded Mimikatz module for token manipulation.[22]"
-  },
-  {
-    "source": "Access-Token-Manipulation.txt",
-    "chunk_index": 24,
-    "text": "S0446\tRyuk\t\nRyuk has attempted to adjust its token privileges to have the SeDebugPrivilege.[23]"
-  },
-  {
-    "source": "Access-Token-Manipulation.txt",
-    "chunk_index": 25,
-    "text": "S1210\tSagerunex\t\nSagerunex finds the explorer.exe process after execution and uses it to change the token of its executing thread.[24]"
-  },
-  {
-    "source": "Access-Token-Manipulation.txt",
-    "chunk_index": 26,
-    "text": "S0633\tSliver\t\nSliver has the ability to manipulate user tokens on targeted Windows systems.[25][26]"
-  },
-  {
-    "source": "Access-Token-Manipulation.txt",
-    "chunk_index": 27,
-    "text": "S0058\tSslMM\t\nSslMM contains a feature to manipulate process privileges and tokens.[27]"
+    "text": "KillDisk has attempted to get the access token of a process by calling OpenProcessToken. If KillDisk gets the access token, then it attempt to modify the token privileges with AdjustTokenPrivileges."
   },
   {
     "source": "Access-Token-Manipulation.txt",
     "chunk_index": 28,
-    "text": "S0562\tSUNSPOT\t\nSUNSPOT modified its security token to grants itself debugging privileges by adding SeDebugPrivilege.[28]"
+    "text": "Mitigations\nID\tMitigation\tDescription\nM1026\tPrivileged Account Management\t\nLimit permissions so that users and user groups cannot create tokens. This setting should be defined for the local system account only. GPO: Computer Configuration > [Policies] > Windows Settings > Security Settings > Local Policies > User Rights Assignment: Create a token object.  Also define who can create a process level token to only the local and network service through GPO: Computer Configuration > [Policies] > Wind"
   },
   {
     "source": "Access-Token-Manipulation.txt",
     "chunk_index": 29,
-    "text": "Mitigations\nID\tMitigation\tDescription\nM1026\tPrivileged Account Management\t\nLimit permissions so that users and user groups cannot create tokens. This setting should be defined for the local system account only. GPO: Computer Configuration > [Policies] > Windows Settings > Security Settings > Local Policies > User Rights Assignment: Create a token object. [29] Also define who can create a process level token to only the local and network service through GPO: Computer Configuration > [Policies] > "
+    "text": " token to only the local and network service through GPO: Computer Configuration > [Policies] > Windows Settings > Security Settings > Local Policies > User Rights Assignment: Replace a process level token."
   },
   {
     "source": "Access-Token-Manipulation.txt",
     "chunk_index": 30,
-    "text": "evel token to only the local and network service through GPO: Computer Configuration > [Policies] > Windows Settings > Security Settings > Local Policies > User Rights Assignment: Replace a process level token.[30]"
+    "text": "Administrators should log in as a standard user but run their tools with administrator privileges using the built-in access token manipulation command runas."
   },
   {
     "source": "Access-Token-Manipulation.txt",
     "chunk_index": 31,
-    "text": "Administrators should log in as a standard user but run their tools with administrator privileges using the built-in access token manipulation command runas.[31]"
-  },
-  {
-    "source": "Access-Token-Manipulation.txt",
-    "chunk_index": 32,
     "text": "M1018\tUser Account Management\t\nAn adversary must already have administrator level access on the local system to make full use of this technique; be sure to restrict users and accounts to the least privileges they require."
   },
   {
     "source": "Access-Token-Manipulation.txt",
-    "chunk_index": 33,
-    "text": "Detection Strategy\nID\tName\tAnalytic ID\tAnalytic Description\nDET0283\tBehavior-chain detection for T1134 Access Token Manipulation on Windows\tAN0786\t\nDetection of suspicious token manipulation chains: use of token-related APIs (e.g., LogonUser, DuplicateTokenEx) or commands (runas) \u2192 spawning of a new process under a different security context (e.g., SYSTEM) \u2192 mismatched parent-child process lineage or anomalies in Event Tracing for Windows (ETW) token/PPID data \u2192 abnormal lateral or privilege esc"
-  },
-  {
-    "source": "Access-Token-Manipulation.txt",
-    "chunk_index": 34,
-    "text": " or anomalies in Event Tracing for Windows (ETW) token/PPID data \u2192 abnormal lateral or privilege escalation activity."
+    "chunk_index": 32,
+    "text": "Detection Strategy\nID\tName\tAnalytic ID\tAnalytic Description\nDEDetection of suspicious token manipulation chains: use of token-related APIs (e.g., LogonUser, DuplicateTokenEx) or commands (runas) \u2192 spawning of a new process under a different security context (e.g., SYSTEM) \u2192 mismatched parent-child process lineage or anomalies in Event Tracing for Windows (ETW) token/PPID data \u2192 abnormal lateral or privilege escalation activity."
   },
   {
     "source": "Account-Discovery.txt",
     "chunk_index": 0,
-    "text": "Account Discovery\nSub-techniques (4)\nID\tName\nT1087.001\tLocal Account\nT1087.002\tDomain Account\nT1087.003\tEmail Account\nT1087.004\tCloud Account\nAdversaries may attempt to get a listing of valid accounts, usernames, or email addresses on a system or within a compromised environment. This information can help adversaries determine which accounts exist, which can aid in follow-on behavior such as brute-forcing, spear-phishing attacks, or account takeovers (e.g., Valid Accounts)."
+    "text": "Account Discovery\nSub-techniques (4)\nID\tName\nAdversaries may attempt to get a listing of valid accounts, usernames, or email addresses on a system or within a compromised environment. This information can help adversaries determine which accounts exist, which can aid in follow-on behavior such as brute-forcing, spear-phishing attacks, or account takeovers (e.g., Valid Accounts)."
   },
   {
     "source": "Account-Discovery.txt",
@@ -187,62 +92,22 @@
   {
     "source": "Account-Discovery.txt",
     "chunk_index": 2,
-    "text": "For examples, cloud environments typically provide easily accessible interfaces to obtain user lists.[1][2] On hosts, adversaries can use default PowerShell and other command line functionality to identify accounts. Information about email addresses and accounts may also be extracted by searching an infected system\u2019s files."
+    "text": "For examples, cloud environments typically provide easily accessible interfaces to obtain user lists. On hosts, adversaries can use default PowerShell and other command line functionality to identify accounts. Information about email addresses and accounts may also be extracted by searching an infected system\u2019s files."
   },
   {
     "source": "Account-Discovery.txt",
     "chunk_index": 3,
-    "text": "ID: T1087\nSub-techniques:  T1087.001, T1087.002, T1087.003, T1087.004\n\u24d8\nTactic: Discovery\n\u24d8\nPlatforms: ESXi, IaaS, Identity Provider, Linux, Office Suite, SaaS, Windows, macOS\nContributors: Daniel Stepanic, Elastic; Microsoft Threat Intelligence Center (MSTIC); Travis Smith, Tripwire\nVersion: 2.6\nCreated: 31 May 2017\nLast Modified: 12 May 2026\nVersion Permalink\nProcedure Examples\nID\tName\tDescription\nC0062\tAnthropic AI-orchestrated Campaign\t\nDuring the Anthropic AI-orchestrated Campaign, the adve"
+    "text": "ID: \u24d8\nTactic: Discovery\n\u24d8\nPlatforms: ESXi, IaaS, Identity Provider, Linux, Office Suite, SaaS, Windows, macOS\nContributors: Daniel Stepanic, Elastic; Microsoft Threat Intelligence Center (MSTIC); Travis Smith, Tripwire\nVersion: 2.6\nCreated: 31 May 2017\nLast Modified: 12 May 2026\nVersion Permalink\nProcedure Examples\nID\tName\tDescription\nC0062\tAnthropic AI-orchestrated Campaign\t\nDuring the Anthropic AI-orchestrated Campaign, the adversary used Claude Code to query internal database user account tab"
   },
   {
     "source": "Account-Discovery.txt",
     "chunk_index": 4,
-    "text": "on\nC0062\tAnthropic AI-orchestrated Campaign\t\nDuring the Anthropic AI-orchestrated Campaign, the adversary used Claude Code to query internal database user account tables to enumerate accounts and identify high-privilege accounts within compromised environments.[3]"
-  },
-  {
-    "source": "Account-Discovery.txt",
-    "chunk_index": 5,
-    "text": "G0143\tAquatic Panda\t\nAquatic Panda used the last command in Linux environments to identify recently logged-in users on victim machines.[4]"
-  },
-  {
-    "source": "Account-Discovery.txt",
-    "chunk_index": 6,
-    "text": "G1016\tFIN13\t\nFIN13 has enumerated all users and their roles from a victim's main treasury system.[5]"
-  },
-  {
-    "source": "Account-Discovery.txt",
-    "chunk_index": 7,
-    "text": "S1229\tHavoc\t\nHavoc can identify privileged user accounts on infected systems.[6]"
-  },
-  {
-    "source": "Account-Discovery.txt",
-    "chunk_index": 8,
-    "text": "G1015\tScattered Spider\t\nScattered Spider has identified vSphere administrator accounts.[7]"
-  },
-  {
-    "source": "Account-Discovery.txt",
-    "chunk_index": 9,
-    "text": "S0445\tShimRatReporter\t\nShimRatReporter listed all non-privileged and privileged accounts available on the machine.[8]"
+    "text": "AI-orchestrated Campaign, the adversary used Claude Code to query internal database user account tables to enumerate accounts and identify high-privilege accounts within compromised environments."
   },
   {
     "source": "Account-Discovery.txt",
     "chunk_index": 10,
-    "text": "C0024\tSolarWinds Compromise\t\nDuring the SolarWinds Compromise, APT29 obtained a list of users and their roles from an Exchange server using Get-ManagementRoleAssignment.[9]"
-  },
-  {
-    "source": "Account-Discovery.txt",
-    "chunk_index": 11,
-    "text": "S1239\tTONESHELL\t\nTONESHELL included functionality to retrieve a list of user accounts.[10]"
-  },
-  {
-    "source": "Account-Discovery.txt",
-    "chunk_index": 12,
-    "text": "S1065\tWoody RAT\t\nWoody RAT can identify administrator accounts on an infected machine.[11]"
-  },
-  {
-    "source": "Account-Discovery.txt",
-    "chunk_index": 13,
-    "text": "S0658\tXCSSET\t\nXCSSET attempts to discover accounts from various locations such as a user's Evernote, AppleID, Telegram, Skype, and WeChat data.[12]"
+    "text": "C0024\tSolarWinds Compromise\t\nDuring the SolarWinds Compromise, APT29 obtained a list of users and their roles from an Exchange server using Get-ManagementRoleAssignment."
   },
   {
     "source": "Account-Discovery.txt",
@@ -251,23 +116,8 @@
   },
   {
     "source": "Account-Discovery.txt",
-    "chunk_index": 15,
-    "text": "> [Policies] > Administrative Templates > Windows Components > Credential User Interface: E numerate administrator accounts on elevation. [13]"
-  },
-  {
-    "source": "Account-Discovery.txt",
-    "chunk_index": 16,
-    "text": "M1018\tUser Account Management\t\nManage the creation, modification, use, and permissions associated to user accounts."
-  },
-  {
-    "source": "Account-Discovery.txt",
     "chunk_index": 17,
-    "text": "Detection Strategy\nID\tName\tAnalytic ID\tAnalytic Description\nDET0587\tEnumeration of User or Account Information Across Platforms\tAN1612\t\nDetection of processes performing local or domain account enumeration by invoking account directory queries or security APIs followed by structured output of account lists. The defender observes command execution or API invocation patterns that retrieve account information and produce enumeration artifacts shortly afterward."
-  },
-  {
-    "source": "Account-Discovery.txt",
-    "chunk_index": 18,
-    "text": "AN1613\t\nEnumeration of users and groups through suspicious shell commands or unauthorized access to /etc/passwd or /etc/shadow."
+    "text": "Detection Strategy\nID\tName\tAnalytic ID\tAnalytic Description\nDEDetection of processes performing local or domain account enumeration by invoking account directory queries or security APIs followed by structured output of account lists. The defender observes command execution or API invocation patterns that retrieve account information and produce enumeration artifacts shortly afterward."
   },
   {
     "source": "Account-Discovery.txt",
@@ -290,19 +140,9 @@
     "text": "AN1617\t\nDetection of enumeration activity when system processes query ESXi host account configuration or management APIs to retrieve user account listings."
   },
   {
-    "source": "Account-Discovery.txt",
-    "chunk_index": 23,
-    "text": "AN1618\t\nAccount enumeration via bulk access to user directory features or hidden APIs."
-  },
-  {
-    "source": "Account-Discovery.txt",
-    "chunk_index": 24,
-    "text": "AN1619\t\nAccount discovery via VBA macros, COM objects, or embedded scripting."
-  },
-  {
     "source": "AS-REP-Roasting.txt",
     "chunk_index": 0,
-    "text": "Steal or Forge Kerberos Tickets: AS-REP Roasting\nOther sub-techniques of Steal or Forge Kerberos Tickets (5)\nID\tName\nT1558.001\tGolden Ticket\nT1558.002\tSilver Ticket\nT1558.003\tKerberoasting\nT1558.004\tAS-REP Roasting\nT1558.005\tCcache Files\nAdversaries may reveal credentials of accounts that have disabled Kerberos preauthentication by Password Cracking Kerberos messages.[1]"
+    "text": "Steal or Forge Kerberos Tickets: AS-REP Roasting\nAdversaries may reveal credentials of accounts that have disabled Kerberos preauthentication by Password Cracking Kerberos messages."
   },
   {
     "source": "AS-REP-Roasting.txt",
@@ -312,52 +152,37 @@
   {
     "source": "AS-REP-Roasting.txt",
     "chunk_index": 2,
-    "text": "er\u2019s password, it will then send an Authentication Server Response (AS-REP) message that contains the Ticket Granting Ticket (TGT) to the user. Part of the AS-REP message is signed with the user\u2019s password.[2]"
+    "text": "er\u2019s password, it will then send an Authentication Server Response (AS-REP) message that contains the Ticket Granting Ticket (TGT) to the user. Part of the AS-REP message is signed with the user\u2019s password."
   },
   {
     "source": "AS-REP-Roasting.txt",
     "chunk_index": 3,
-    "text": "For each account found without preauthentication, an adversary may send an AS-REQ message without the encrypted timestamp and receive an AS-REP message with TGT data which may be encrypted with an insecure algorithm such as RC4. The recovered encrypted data may be vulnerable to offline Password Cracking attacks similarly to Kerberoasting and expose plaintext credentials. [1][3]"
+    "text": "For each account found without preauthentication, an adversary may send an AS-REQ message without the encrypted timestamp and receive an AS-REP message with TGT data which may be encrypted with an insecure algorithm such as RC4. The recovered encrypted data may be vulnerable to offline Password Cracking attacks similarly to Kerberoasting and expose plaintext credentials."
   },
   {
     "source": "AS-REP-Roasting.txt",
     "chunk_index": 4,
-    "text": "An account registered to a domain, with or without special privileges, can be abused to list all domain accounts that have preauthentication disabled by utilizing Windows tools like PowerShell with an LDAP filter. Alternatively, the adversary may send an AS-REQ message for each user. If the DC responds without errors, the account does not require preauthentication and the AS-REP message will already contain the encrypted data. [1][3]"
-  },
-  {
-    "source": "AS-REP-Roasting.txt",
-    "chunk_index": 5,
-    "text": "Cracked hashes may enable Persistence, Privilege Escalation, and Lateral Movement via access to Valid Accounts.[4]"
+    "text": "An account registered to a domain, with or without special privileges, can be abused to list all domain accounts that have preauthentication disabled by utilizing Windows tools like PowerShell with an LDAP filter. Alternatively, the adversary may send an AS-REQ message for each user. If the DC responds without errors, the account does not require preauthentication and the AS-REP message will already contain the encrypted data."
   },
   {
     "source": "AS-REP-Roasting.txt",
     "chunk_index": 6,
-    "text": "ID: T1558.004\nSub-technique of:  T1558\n\u24d8\nTactic: Credential Access\n\u24d8\nPlatforms: Windows\nContributors: Dan Nutting, @KerberToast; Jacques Pluviose, @Jacqueswildy_IT; James Dunn, @jamdunnDFW, EY; Swapnil Kumbhar; Yossi Nisani, Cymptom\nVersion: 1.2\nCreated: 24 August 2020\nLast Modified: 24 October 2025\nVersion Permalink\nProcedure Examples\nID\tName\tDescription\nS1071\tRubeus\t\nRubeus can reveal the credentials of accounts that have Kerberos pre-authentication disabled through AS-REP roasting.[5][6][7]"
+    "text": "ID: \u24d8\nTactic: Credential Access\n\u24d8\nPlatforms: Windows\nContributors: Dan Nutting, @KerberToast; Jacques Pluviose, @Jacqueswildy_IT; James Dunn, @jamdunnDFW, EY; Swapnil Kumbhar; Yossi Nisani, Cymptom\nVersion: 1.2\nCreated: 24 August 2020\nLast Modified: 24 October 2025\nVersion Permalink\nProcedure Examples\nID\tName\tDescription\nRubeus can reveal the credentials of accounts that have Kerberos pre-authentication disabled through AS-REP roasting."
   },
   {
     "source": "AS-REP-Roasting.txt",
     "chunk_index": 7,
-    "text": "Mitigations\nID\tMitigation\tDescription\nM1047\tAudit\t\nKerberos preauthentication is enabled by default. Older protocols might not support preauthentication therefore it is possible to have this setting disabled. Make sure that all accounts have preauthentication whenever possible and audit changes to setting. Windows tools such as PowerShell may be used to easily find which accounts have preauthentication disabled. [8][3]"
-  },
-  {
-    "source": "AS-REP-Roasting.txt",
-    "chunk_index": 8,
-    "text": "M1041\tEncrypt Sensitive Information\t\nEnable AES Kerberos encryption (or another stronger encryption algorithm), rather than RC4, where possible.[9]"
+    "text": "Mitigations\nID\tMitigation\tDescription\nM1047\tAudit\t\nKerberos preauthentication is enabled by default. Older protocols might not support preauthentication therefore it is possible to have this setting disabled. Make sure that all accounts have preauthentication whenever possible and audit changes to setting. Windows tools such as PowerShell may be used to easily find which accounts have preauthentication disabled."
   },
   {
     "source": "AS-REP-Roasting.txt",
     "chunk_index": 9,
-    "text": "M1027\tPassword Policies\t\nEnsure strong password length (ideally 25+ characters) and complexity for service accounts and that these passwords periodically expire. Also consider using Group Managed Service Accounts or another third party product such as password vaulting. [9]"
+    "text": "M1027\tPassword Policies\t\nEnsure strong password length (ideally 25+ characters) and complexity for service accounts and that these passwords periodically expire. Also consider using Group Managed Service Accounts or another third party product such as password vaulting."
   },
   {
     "source": "AS-REP-Roasting.txt",
     "chunk_index": 10,
-    "text": "Detection Strategy\nID\tName\tAnalytic ID\tAnalytic Description\nDET0113\tDetect AS-REP Roasting Attempts (T1558.004)\tAN0316\t\nDetects AS-REP roasting attempts by monitoring for Kerberos AS-REQ/AS-REP authentication patterns where preauthentication is disabled (Event ID 4768 with Pre-Auth Type 0). Correlates these requests with subsequent service ticket activity (Event ID 4769) and anomalies such as requests using weak RC4 encryption (etype 0x17). Excessive enumeration of accounts with 'Do not require "
-  },
-  {
-    "source": "AS-REP-Roasting.txt",
-    "chunk_index": 11,
-    "text": "ests using weak RC4 encryption (etype 0x17). Excessive enumeration of accounts with 'Do not require Kerberos preauthentication' set in Active Directory is another key detection point."
+    "text": "Detection Strategy\nID\tName\tAnalytic ID\tAnalytic Description\nDEDetects AS-REP roasting attempts by monitoring for Kerberos AS-REQ/AS-REP authentication patterns where preauthentication is disabled (Event ID 4768 with Pre-Auth Type 0). Correlates these requests with subsequent service ticket activity (Event ID 4769) and anomalies such as requests using weak RC4 encryption (etype 0x17). Excessive enumeration of accounts with 'Do not require Kerberos preauthentication' set in Active Directory is ano"
   },
   {
     "source": "CIA-Advisory.txt",
@@ -386,11 +211,6 @@
   },
   {
     "source": "CIA-Advisory.txt",
-    "chunk_index": 5,
-    "text": "nd public sector organizations. These tactics, techniques, and procedures (TTPs) feature three key components:"
-  },
-  {
-    "source": "CIA-Advisory.txt",
     "chunk_index": 6,
     "text": "Compromising or bypassing federated identity solutions;\nUsing forged authentication tokens to move laterally to Microsoft cloud environments; and\nUsing privileged access to a victim\u2019s cloud environment to establish difficult-to-detect persistence mechanisms for Application Programming Interface (API)-based access.\nThis Alert describes these TTPs and offers an overview of, and guidance on, available open-source tools\u2014including a CISA-developed tool, Sparrow\u2014for network defenders to analyze their "
   },
@@ -407,12 +227,7 @@
   {
     "source": "CIA-Advisory.txt",
     "chunk_index": 9,
-    "text": "Technical Details\nFrequently, CISA has observed the APT actor gaining Initial Access [TA0001] to victims\u2019 enterprise networks via compromised SolarWinds Orion products (e.g., Solorigate, Sunburst).[1] However, CISA is investigating instances in which the threat actor may have obtained initial access by Password Guessing [T1110.001], Password Spraying [T1110.003], and/or exploiting inappropriately secured administrative or service credentials (Unsecured Credentials [T1552]) instead of utilizing t"
-  },
-  {
-    "source": "CIA-Advisory.txt",
-    "chunk_index": 10,
-    "text": "secured administrative or service credentials (Unsecured Credentials [T1552]) instead of utilizing the compromised SolarWinds Orion products."
+    "text": "Technical Details\nFrequently, CISA has observed the APT actor gaining Initial Access [TA0001] to victims\u2019 enterprise networks via compromised SolarWinds Orion products (e.g., Solorigate, Sunburst). However, CISA is investigating instances in which the threat actor may have obtained initial access by Password Guessing [T1110.001], Password Spraying [T1110.003], and/or exploiting inappropriately secured administrative or service credentials (Unsecured Credentials [T1552]) instead of utilizing the "
   },
   {
     "source": "CIA-Advisory.txt",
@@ -437,12 +252,12 @@
   {
     "source": "CIA-Advisory.txt",
     "chunk_index": 15,
-    "text": "Mitigations\nDetection\nGuidance on identifying affected SolarWinds software is well documented.[2] However\u2014once an organization identifies a compromise via SolarWinds Orion products or other threat actor TTPs\u2014identifying follow-on activity for on-premises networks requires fine-tuned network and host-based forensics."
+    "text": "Mitigations\nDetection\nGuidance on identifying affected SolarWinds software is well documented. However\u2014once an organization identifies a compromise via SolarWinds Orion products or other threat actor TTPs\u2014identifying follow-on activity for on-premises networks requires fine-tuned network and host-based forensics."
   },
   {
     "source": "CIA-Advisory.txt",
     "chunk_index": 16,
-    "text": "The nature of cloud forensics is unique due to the growing and rapidly evolving technology footprints of major vendors. Microsoft's O365 and M365 environments have built-in capabilities for detecting unusual activity. Microsoft also provides premium services (Advanced Threat Protection [ATP] and Azure Sentinel), which enable network defenders to investigate TTPs specific to the Solorigate activity.[3]"
+    "text": "The nature of cloud forensics is unique due to the growing and rapidly evolving technology footprints of major vendors. Microsoft's O365 and M365 environments have built-in capabilities for detecting unusual activity. Microsoft also provides premium services (Advanced Threat Protection [ATP] and Azure Sentinel), which enable network defenders to investigate TTPs specific to the Solorigate activity."
   },
   {
     "source": "CIA-Advisory.txt",
@@ -452,7 +267,7 @@
   {
     "source": "CIA-Advisory.txt",
     "chunk_index": 18,
-    "text": "There are a number of open-source tools available to investigate adversary activity in Microsoft cloud environments and to detect unusual activity, service principals, and application activity.[4] Publicly available PowerShell tools that network defenders can use to investigate M365 and Microsoft Azure include:"
+    "text": "There are a number of open-source tools available to investigate adversary activity in Microsoft cloud environments and to detect unusual activity, service principals, and application activity. Publicly available PowerShell tools that network defenders can use to investigate M365 and Microsoft Azure include:"
   },
   {
     "source": "CIA-Advisory.txt",
@@ -522,12 +337,7 @@
   {
     "source": "CIA-Advisory.txt",
     "chunk_index": 32,
-    "text": " will be recorded even in some situations where the message was not necessarily read interactively (e.g., bind or sync).[5]\nThe resulting suspicious application ID can provide incident responders with a pivot to detect other suspicious applications that require additional analysis.\nCheck for changes to applications with regards to the accessing of resources such as mail or file items.\n(Updated April 8, 2021): Aviary can be used to assist with performing the above tasks. To install Aviary, after "
-  },
-  {
-    "source": "CIA-Advisory.txt",
-    "chunk_index": 33,
-    "text": "il 8, 2021): Aviary can be used to assist with performing the above tasks. To install Aviary, after running Sparrow:"
+    "text": " will be recorded even in some situations where the message was not necessarily read interactively (e.g., bind or sync).\nThe resulting suspicious application ID can provide incident responders with a pivot to detect other suspicious applications that require additional analysis.\nCheck for changes to applications with regards to the accessing of resources such as mail or file items.\n(Updated April 8, 2021): Aviary can be used to assist with performing the above tasks. To install Aviary, after run"
   },
   {
     "source": "CIA-Advisory.txt",
@@ -541,18 +351,8 @@
   },
   {
     "source": "CIA-Advisory.txt",
-    "chunk_index": 36,
-    "text": "Figure 1: Data Selection Filters"
-  },
-  {
-    "source": "CIA-Advisory.txt",
     "chunk_index": 37,
     "text": "Hawk\nHawk is an open-source, PowerShell-driven, community-developed tool network defenders can use to quickly and easily gather data from O365 and Azure for security investigations. Incident responders and network defenders can investigate specific user principals or the entire tenant. Data it provides include IP addresses and sign-in data. Additionally, Hawk can track IP usage for concurrent login situations."
-  },
-  {
-    "source": "CIA-Advisory.txt",
-    "chunk_index": 38,
-    "text": "Hawk users should review login details for administrator accounts and take the following steps."
   },
   {
     "source": "CIA-Advisory.txt",
@@ -561,13 +361,8 @@
   },
   {
     "source": "CIA-Advisory.txt",
-    "chunk_index": 40,
-    "text": " of the only free, open-source tools available to investigate this activity and could be used to complement Sparrow."
-  },
-  {
-    "source": "CIA-Advisory.txt",
     "chunk_index": 41,
-    "text": "Detection Tool Distinctions\nDetection Methods\nMicrosoft breaks the threat actor\u2019s recent activity into four primary stages, which are described below along with associated detection methods. Microsoft describes these stages as beginning with all activity after the compromise of the on-premises identity solution, such as ADFS.[6]"
+    "text": "Detection Tool Distinctions\nDetection Methods\nMicrosoft breaks the threat actor\u2019s recent activity into four primary stages, which are described below along with associated detection methods. Microsoft describes these stages as beginning with all activity after the compromise of the on-premises identity solution, such as ADFS."
   },
   {
     "source": "CIA-Advisory.txt",
@@ -576,18 +371,8 @@
   },
   {
     "source": "CIA-Advisory.txt",
-    "chunk_index": 43,
-    "text": "Stage 1: Forging a trusted authentication token used to access resources that trust the on-premises identity provider"
-  },
-  {
-    "source": "CIA-Advisory.txt",
     "chunk_index": 44,
-    "text": "These attacks (often referred to as \u201cGolden Security Assertion Markup Language\u201d attacks) can be analyzed using a combination of cloud-based and standard on-premises techniques.[7] For example, network defenders can use OAuth claims for specific principals made at the Azure AD level and compare them to the on-premises identity."
-  },
-  {
-    "source": "CIA-Advisory.txt",
-    "chunk_index": 45,
-    "text": "Export sign-in logs from the Azure AD portal and look at the Authentication Method field."
+    "text": "These attacks (often referred to as \u201cGolden Security Assertion Markup Language\u201d attacks) can be analyzed using a combination of cloud-based and standard on-premises techniques. For example, network defenders can use OAuth claims for specific principals made at the Azure AD level and compare them to the on-premises identity."
   },
   {
     "source": "CIA-Advisory.txt",
@@ -601,43 +386,13 @@
   },
   {
     "source": "CIA-Advisory.txt",
-    "chunk_index": 48,
-    "text": "Using SAML single sign-on, search for any logins to service providers that do not have corresponding event IDs 4769, 1200, and 1202 in the domain."
-  },
-  {
-    "source": "CIA-Advisory.txt",
-    "chunk_index": 49,
-    "text": "Detection Method 2: Identifying certificate export events in ADFS"
-  },
-  {
-    "source": "CIA-Advisory.txt",
-    "chunk_index": 50,
-    "text": "Look for:"
-  },
-  {
-    "source": "CIA-Advisory.txt",
-    "chunk_index": 51,
-    "text": "Detection Method 3: Customizing SAML response to identify irregular access"
-  },
-  {
-    "source": "CIA-Advisory.txt",
     "chunk_index": 52,
-    "text": "This method serves as prevention for the future (and would only detect future, not past, activity), as it helps identify irregularities from the point of the change forward. Organizations can modify SAML responses to include custom elements for each service provider to monitor and detect any anomalous requests.[8]"
-  },
-  {
-    "source": "CIA-Advisory.txt",
-    "chunk_index": 53,
-    "text": "Detection Method 4: Detecting malicious ADFS trust modification"
+    "text": "This method serves as prevention for the future (and would only detect future, not past, activity), as it helps identify irregularities from the point of the change forward. Organizations can modify SAML responses to include custom elements for each service provider to monitor and detect any anomalous requests."
   },
   {
     "source": "CIA-Advisory.txt",
     "chunk_index": 54,
-    "text": "A threat actor who gains administrative access to ADFS can add a new, trusted ADFS rather than extracting the certificate and private key as part of a standard Golden SAML attack.[9]\nNetwork defenders should look for:"
-  },
-  {
-    "source": "CIA-Advisory.txt",
-    "chunk_index": 55,
-    "text": "Stage 2: Using the forged authentication token to create configuration changes in the Service Provider, such as Azure AD (establishing a foothold)"
+    "text": "A threat actor who gains administrative access to ADFS can add a new, trusted ADFS rather than extracting the certificate and private key as part of a standard Golden SAML attack.\nNetwork defenders should look for:"
   },
   {
     "source": "CIA-Advisory.txt",
@@ -651,33 +406,18 @@
   },
   {
     "source": "CIA-Advisory.txt",
-    "chunk_index": 58,
-    "text": "Network defenders should take the following steps."
-  },
-  {
-    "source": "CIA-Advisory.txt",
     "chunk_index": 59,
     "text": "Stage 3: Acquiring an OAuth access token for the application using the forged credentials added to an existing application or service principal and calling APIs with the permissions assigned to that application"
   },
   {
     "source": "CIA-Advisory.txt",
     "chunk_index": 60,
-    "text": "In some cases, the threat actor has been observed adding permissions to existing applications or service principals. Additionally the actor has been seen establishing new applications or service principals briefly and using them to add permissions to the existing applications or service principals, possibly to add a layer of indirection (e.g., using it to add a credential to another service principal, and then deleting it).[11]"
-  },
-  {
-    "source": "CIA-Advisory.txt",
-    "chunk_index": 61,
-    "text": "Network defenders should use Sparrow to:"
+    "text": "In some cases, the threat actor has been observed adding permissions to existing applications or service principals. Additionally the actor has been seen establishing new applications or service principals briefly and using them to add permissions to the existing applications or service principals, possibly to add a layer of indirection (e.g., using it to add a credential to another service principal, and then deleting it)."
   },
   {
     "source": "CIA-Advisory.txt",
     "chunk_index": 62,
     "text": "Stage 4: Once access has been established, the threat actor Uses Microsoft Graph API to conduct action on objectives from an external RESTful API (queries impersonating existing applications)."
-  },
-  {
-    "source": "CIA-Advisory.txt",
-    "chunk_index": 63,
-    "text": "Network defenders should:"
   },
   {
     "source": "CIA-Advisory.txt",
@@ -687,22 +427,17 @@
   {
     "source": "CIA-Advisory.txt",
     "chunk_index": 65,
-    "text": "Service principal logging is available using the Azure Portal via the \"Service Principal Sign-ins\" feature. Enable settings in the Azure Portal (see \u201cDiagnostic Setting\u201d) to ingest logs into Sentinel or a third-party security information and event management (SIEM) tool. An Azure Premium P1 or Premium P2 license is necessary to access this setting as well as other features, such as a log analytics workspace, storage account, or event hub.[12] These logs must be downloaded manually if not ingeste"
+    "text": "Service principal logging is available using the Azure Portal via the \"Service Principal Sign-ins\" feature. Enable settings in the Azure Portal (see \u201cDiagnostic Setting\u201d) to ingest logs into Sentinel or a third-party security information and event management (SIEM) tool. An Azure Premium P1 or Premium P2 license is necessary to access this setting as well as other features, such as a log analytics workspace, storage account, or event hub. These logs must be downloaded manually if not ingested by"
   },
   {
     "source": "CIA-Advisory.txt",
     "chunk_index": 66,
-    "text": " workspace, storage account, or event hub.[12] These logs must be downloaded manually if not ingested by one of the methods listed in the Detection Methods section."
+    "text": " workspace, storage account, or event hub. These logs must be downloaded manually if not ingested by one of the methods listed in the Detection Methods section."
   },
   {
     "source": "CIA-Advisory.txt",
     "chunk_index": 67,
     "text": "Global Administrator rights are often required by tools other than Hawk and Sparrow to evaluate M365 cloud security posture. Logging capability and visibility of data varies by licensing models and subscription to premium services, such as Microsoft Defender for O365 and Azure Sentinel. According to CrowdStrike, \"There was an inability to audit via API, and there is the requirement for global admin rights to view important information which we found to be excessive. Key information should be eas"
-  },
-  {
-    "source": "CIA-Advisory.txt",
-    "chunk_index": 68,
-    "text": "n rights to view important information which we found to be excessive. Key information should be easily accessible.\"[13]"
   },
   {
     "source": "CIA-Advisory.txt",
@@ -721,13 +456,8 @@
   },
   {
     "source": "CIA-Advisory.txt",
-    "chunk_index": 72,
-    "text": "A properly configured SIEM can provide:"
-  },
-  {
-    "source": "CIA-Advisory.txt",
     "chunk_index": 73,
-    "text": "Built-in tools, such as Microsoft Cloud Services and M365 applications, provide much of the same visibility available from custom tools and are mapped to the MITRE ATT&CK framework and easy-to-understand dashboards.[14] However, these tools often do not have the ability to pull historical data older than seven days. Therefore, storage solutions that appropriately meet governance standards and usability metrics for analysts for the SIEM must be carefully planned and arranged."
+    "text": "Built-in tools, such as Microsoft Cloud Services and M365 applications, provide much of the same visibility available from custom tools and are mapped to the MITRE ATT&CK framework and easy-to-understand dashboards. However, these tools often do not have the ability to pull historical data older than seven days. Therefore, storage solutions that appropriately meet governance standards and usability metrics for analysts for the SIEM must be carefully planned and arranged."
   },
   {
     "source": "CIA-Advisory.txt",
@@ -777,57 +507,57 @@
   {
     "source": "CIA-Advisory.txt",
     "chunk_index": 83,
-    "text": "f service principal and application credentials. Sparrow will detect modifications to these credentials.\nLook for unusual application usage, such as dormant or forgotten applications being used again.\nAudit the assignment of credentials to applications that allow non-interactive sign-in by the application.\nLook for unexpected trust relationships that have been added to Azure AD. (Download the last 30 days of non-interactive sign-ins from the Azure portal or use Azure Sentinel.).[10]\nUse Hawk (an"
+    "text": "f service principal and application credentials. Sparrow will detect modifications to these credentials.\nLook for unusual application usage, such as dormant or forgotten applications being used again.\nAudit the assignment of credentials to applications that allow non-interactive sign-in by the application.\nLook for unexpected trust relationships that have been added to Azure AD. (Download the last 30 days of non-interactive sign-ins from the Azure portal or use Azure Sentinel.).\nUse Hawk (and an"
   },
   {
     "source": "CIA-Advisory.txt",
     "chunk_index": 84,
-    "text": " 30 days of non-interactive sign-ins from the Azure portal or use Azure Sentinel.).[10]\nUse Hawk (and any sub-modules available) to run an investigation on a specific user. Hawk will provide IP addresses, sign-in data, and other data. Hawk can also track IP usage in concurrent login situations.\nReview login details for administrator accounts (e.g., high-value administrative accounts, such as Global Admins). Look for unusual sign-in locations, dates, and times.\nReview new token validation time pe"
+    "text": " 30 days of non-interactive sign-ins from the Azure portal or use Azure Sentinel.).\nUse Hawk (and any sub-modules available) to run an investigation on a specific user. Hawk will provide IP addresses, sign-in data, and other data. Hawk can also track IP usage in concurrent login situations.\nReview login details for administrator accounts (e.g., high-value administrative accounts, such as Global Admins). Look for unusual sign-in locations, dates, and times.\nReview new token validation time period"
   },
   {
     "source": "CIA-Advisory.txt",
     "chunk_index": 85,
-    "text": "l Admins). Look for unusual sign-in locations, dates, and times.\nReview new token validation time periods with high values and investigate whether the changes are legitimate or a threat actor\u2019s attempts to gain persistence.\nExamine highly privileged accounts; specifically using sign-in logs, look for unusual sign-in locations, dates, and times.\nCreate a timeline for all credential changes.\nMonitor changes in application credentials (the script will export into csv named AppUpdate_Operations_Expo"
+    "text": "mins). Look for unusual sign-in locations, dates, and times.\nReview new token validation time periods with high values and investigate whether the changes are legitimate or a threat actor\u2019s attempts to gain persistence.\nExamine highly privileged accounts; specifically using sign-in logs, look for unusual sign-in locations, dates, and times.\nCreate a timeline for all credential changes.\nMonitor changes in application credentials (the script will export into csv named AppUpdate_Operations_Export)."
   },
   {
     "source": "CIA-Advisory.txt",
     "chunk_index": 86,
-    "text": " changes in application credentials (the script will export into csv named AppUpdate_Operations_Export).\nDetect service principal credentials change and service principal change (e.g., if an actor adds new permissions or expands existing permissions).\nExport and view this activity via the ServicePrincipal_Operations_Export.\nRecord OAuth consent and consent to applications\nExport and view this record via the Consent_Operations_Export file.\nInvestigate instances of excessive high permissions, incl"
+    "text": "nges in application credentials (the script will export into csv named AppUpdate_Operations_Export).\nDetect service principal credentials change and service principal change (e.g., if an actor adds new permissions or expands existing permissions).\nExport and view this activity via the ServicePrincipal_Operations_Export.\nRecord OAuth consent and consent to applications\nExport and view this record via the Consent_Operations_Export file.\nInvestigate instances of excessive high permissions, includin"
   },
   {
     "source": "CIA-Advisory.txt",
     "chunk_index": 87,
-    "text": "rd via the Consent_Operations_Export file.\nInvestigate instances of excessive high permissions, including, but not limited to Exchange Online, Microsoft Graph, and Azure AD Graph.\nReview Microsoft Graph API permissions granted to service principals.\nExport and view this activity via the ApplicationGraphPermissions csv file.\nNote: Hawk can also return the full list of service principal permissions for further investigation.\nReview top actors and the amount of credential modifications performed.\nM"
+    "text": "ia the Consent_Operations_Export file.\nInvestigate instances of excessive high permissions, including, but not limited to Exchange Online, Microsoft Graph, and Azure AD Graph.\nReview Microsoft Graph API permissions granted to service principals.\nExport and view this activity via the ApplicationGraphPermissions csv file.\nNote: Hawk can also return the full list of service principal permissions for further investigation.\nReview top actors and the amount of credential modifications performed.\nMonit"
   },
   {
     "source": "CIA-Advisory.txt",
     "chunk_index": 88,
-    "text": "for further investigation.\nReview top actors and the amount of credential modifications performed.\nMonitor changes in application credentials.\nIdentify manipulation of custom or third-party applications.\nNetwork defenders should review the catalog of custom or third-party vendors with applications in the Microsoft tenant and perform the above interrogation principles on those applications and trusts.\nReview modifications to federation trust settings.\nReview new token validation time periods with"
+    "text": "further investigation.\nReview top actors and the amount of credential modifications performed.\nMonitor changes in application credentials.\nIdentify manipulation of custom or third-party applications.\nNetwork defenders should review the catalog of custom or third-party vendors with applications in the Microsoft tenant and perform the above interrogation principles on those applications and trusts.\nReview modifications to federation trust settings.\nReview new token validation time periods with hig"
   },
   {
     "source": "CIA-Advisory.txt",
     "chunk_index": 89,
-    "text": "ts.\nReview modifications to federation trust settings.\nReview new token validation time periods with high values and investigate whether this was a legitimate change or an attempt to gain persistence by the threat actor.\nThe script detects the escalation of privileges, including the addition of Service Principals (SP) to privileged roles. Export this data into csv called AppRoleAssignment_Operations_Export.\nIn MailItemsAccessed operations, found within the Unified Audit Log (UAL), review the app"
+    "text": "Review modifications to federation trust settings.\nReview new token validation time periods with high values and investigate whether this was a legitimate change or an attempt to gain persistence by the threat actor.\nThe script detects the escalation of privileges, including the addition of Service Principals (SP) to privileged roles. Export this data into csv called AppRoleAssignment_Operations_Export.\nIn MailItemsAccessed operations, found within the Unified Audit Log (UAL), review the applica"
   },
   {
     "source": "CIA-Advisory.txt",
     "chunk_index": 90,
-    "text": "ns_Export.\nIn MailItemsAccessed operations, found within the Unified Audit Log (UAL), review the application ID used (requires G5 or E5 license for this specific detail).\nQuery the specific application ID, using the Sparrow script\u2019s app ID investigation capability to interrogate mail and file items accessed for that applicationID (Use the application ID utility for any other suspicious apps that require additional analysis.).\nCheck the permissions of an application in M365/Azure AD using Sparrow"
+    "text": "xport.\nIn MailItemsAccessed operations, found within the Unified Audit Log (UAL), review the application ID used (requires G5 or E5 license for this specific detail).\nQuery the specific application ID, using the Sparrow script\u2019s app ID investigation capability to interrogate mail and file items accessed for that applicationID (Use the application ID utility for any other suspicious apps that require additional analysis.).\nCheck the permissions of an application in M365/Azure AD using Sparrow.\nHa"
   },
   {
     "source": "CIA-Advisory.txt",
     "chunk_index": 91,
-    "text": "equire additional analysis.).\nCheck the permissions of an application in M365/Azure AD using Sparrow.\nHawk will return Azure_Application_Audit, and Sparrow will return ApplicationGraphPermissions.\nNetwork defenders will see the IP address that Graph API uses.\nNote: the Microsoft IP address may not show up as a virtual private server/anonymized endpoint.\nInvestigate a specific service principal, if it is a user-specific user account, in Hawk. This activity is challenging to see without Azure Sent"
+    "text": "re additional analysis.).\nCheck the permissions of an application in M365/Azure AD using Sparrow.\nHawk will return Azure_Application_Audit, and Sparrow will return ApplicationGraphPermissions.\nNetwork defenders will see the IP address that Graph API uses.\nNote: the Microsoft IP address may not show up as a virtual private server/anonymized endpoint.\nInvestigate a specific service principal, if it is a user-specific user account, in Hawk. This activity is challenging to see without Azure Sentinel"
   },
   {
     "source": "CIA-Advisory.txt",
     "chunk_index": 92,
-    "text": " it is a user-specific user account, in Hawk. This activity is challenging to see without Azure Sentinel or manually downloading and reviewing logs from the sign-in portal.\nLonger term storage of log data.\nCross correlation of log data with endpoint data and network data (such as those produced by ADFS servers), endpoint detection and response data, and identity provider information.\nAbility to query use of application connectors in Azure.\nContact Information\nCISA encourages recipients of this r"
+    "text": "is a user-specific user account, in Hawk. This activity is challenging to see without Azure Sentinel or manually downloading and reviewing logs from the sign-in portal.\nLonger term storage of log data.\nCross correlation of log data with endpoint data and network data (such as those produced by ADFS servers), endpoint detection and response data, and identity provider information.\nAbility to query use of application connectors in Azure.\nContact Information\nCISA encourages recipients of this repor"
   },
   {
     "source": "CIA-Advisory.txt",
     "chunk_index": 93,
-    "text": "ery use of application connectors in Azure.\nContact Information\nCISA encourages recipients of this report to contribute any additional information that they may have related to this threat. For any questions related to this report, please contact CISA at"
+    "text": "use of application connectors in Azure.\nContact Information\nCISA encourages recipients of this report to contribute any additional information that they may have related to this threat. For any questions related to this report, please contact CISA at"
   },
   {
     "source": "CIA-Advisory.txt",
@@ -846,388 +576,133 @@
   },
   {
     "source": "CIA-Advisory.txt",
-    "chunk_index": 97,
-    "text": "How to Find Activity with Sentinel: https://www.verboon.info/2020/10/monitoring-service-principal-sign-ins-with-azuread-and-azure-sentinel/"
-  },
-  {
-    "source": "CIA-Advisory.txt",
-    "chunk_index": 98,
-    "text": "Third-Party Walkthrough of the Attack: https://dirkjanm.io/azure-ad-privilege-escalation-application-admin/"
-  },
-  {
-    "source": "CIA-Advisory.txt",
     "chunk_index": 99,
     "text": "National Security Agency Advisory on Detecting Abuse of Authentication Mechanisms: https://media.defense.gov/2020/Dec/17/2002554125/-1/-1/0/AUTHENTICATION_MECHANISMS_CSA_U_OO_198854_20.PDF"
   },
   {
-    "source": "CIA-Advisory.txt",
-    "chunk_index": 100,
-    "text": "Microsoft 365 App for Splunk: https://splunkbase.splunk.com/app/3786/"
-  },
-  {
-    "source": "CIA-Advisory.txt",
-    "chunk_index": 101,
-    "text": "CISA Remediation Guidance: https://us-cert.cisa.gov/ncas/alerts/aa20-352a"
-  },
-  {
-    "source": "CIA-Advisory.txt",
-    "chunk_index": 102,
-    "text": "References\n[1] ZDNet: A Second Hacking Group has Targeted SolarWinds Systems\n[2] CISA: Supply Chain Compromise\n[3] Microsoft SolarWinds Post-Compromise Hunting with Azure Sentinel\n[4] Microsoft Solorigate Resource Center\n[5] Advanced Audit in Microsoft 365\n[6] Microsoft: Understanding \u201cSolorigate\u2019s\u201d Identity IOCs\n[7] Detection and Hunting of Golden SAML Attack:\n[8] Ibid\n[9] Ibid\n[10] Microsoft: AADServicePrincipalSignInLogs\n[11] Microsoft: Understanding \u201cSolorigate\u2019s\u201d Identity IOCs\n[12] Azure Ac"
-  },
-  {
-    "source": "CIA-Advisory.txt",
-    "chunk_index": 103,
-    "text": "DServicePrincipalSignInLogs\n[11] Microsoft: Understanding \u201cSolorigate\u2019s\u201d Identity IOCs\n[12] Azure Active Directory Sign-in Activity Reports\n[13] CrowdStrike: CrowdStrike Launches Free Tool to Identify and Help Mitigate Risks in Azure Active Directory\n[14] Microsoft 365 App for Splunk\nRevisions\nInitial version: January 8, 2021|February 4, 2021: Removed link and section for outdated product feedback form|April 8, 2021: Added Aviary Dashboard information|April 15, 2021: Added Attribution Statement"
-  },
-  {
-    "source": "CIA-Advisory.txt",
-    "chunk_index": 104,
-    "text": " form|April 8, 2021: Added Aviary Dashboard information|April 15, 2021: Added Attribution Statement"
-  },
-  {
-    "source": "CIA-Advisory.txt",
-    "chunk_index": 105,
-    "text": "This product is provided subject to this Notification and this Privacy & Use policy."
-  },
-  {
     "source": "Kerberoasting.txt",
     "chunk_index": 0,
-    "text": "Steal or Forge Kerberos Tickets: Kerberoasting\nOther sub-techniques of Steal or Forge Kerberos Tickets (5)\nID\tName\nT1558.001\tGolden Ticket\nT1558.002\tSilver Ticket\nT1558.003\tKerberoasting\nT1558.004\tAS-REP Roasting\nT1558.005\tCcache Files\nAdversaries may abuse a valid Kerberos ticket-granting ticket (TGT) or sniff network traffic to obtain a ticket-granting service (TGS) ticket that may be vulnerable to Brute Force.[1][2]"
+    "text": "Steal or Forge Kerberos Tickets: Kerberoasting\nAdversaries may abuse a valid Kerberos ticket-granting ticket (TGT) or sniff network traffic to obtain a ticket-granting service (TGS) ticket that may be vulnerable to Brute Force."
   },
   {
     "source": "Kerberoasting.txt",
     "chunk_index": 1,
-    "text": "Service principal names (SPNs) are used to uniquely identify each instance of a Windows service. To enable authentication, Kerberos requires that SPNs be associated with at least one service logon account (an account specifically tasked with running a service[3]).[4][5][6][7]"
+    "text": "Service principal names (SPNs) are used to uniquely identify each instance of a Windows service. To enable authentication, Kerberos requires that SPNs be associated with at least one service logon account (an account specifically tasked with running a service)."
   },
   {
     "source": "Kerberoasting.txt",
     "chunk_index": 2,
-    "text": "Adversaries possessing a valid Kerberos ticket-granting ticket (TGT) may request one or more Kerberos ticket-granting service (TGS) service tickets for any SPN from a domain controller (DC).[1][2] Portions of these tickets may be encrypted with the RC4 algorithm, meaning the Kerberos 5 TGS-REP etype 23 hash of the service account associated with the SPN is used as the private key and is thus vulnerable to offline Brute Force attacks that may expose plaintext credentials.[2][1] [7]"
-  },
-  {
-    "source": "Kerberoasting.txt",
-    "chunk_index": 3,
-    "text": "This same behavior could be executed using service tickets captured from network traffic.[2]"
-  },
-  {
-    "source": "Kerberoasting.txt",
-    "chunk_index": 4,
-    "text": "Cracked hashes may enable Persistence, Privilege Escalation, and Lateral Movement via access to Valid Accounts.[6]"
+    "text": "Adversaries possessing a valid Kerberos ticket-granting ticket (TGT) may request one or more Kerberos ticket-granting service (TGS) service tickets for any SPN from a domain controller (DC). Portions of these tickets may be encrypted with the RC4 algorithm, meaning the Kerberos 5 TGS-REP etype 23 hash of the service account associated with the SPN is used as the private key and is thus vulnerable to offline Brute Force attacks that may expose plaintext credentials."
   },
   {
     "source": "Kerberoasting.txt",
     "chunk_index": 5,
-    "text": "ID: T1558.003\nSub-technique of:  T1558\n\u24d8\nTactic: Credential Access\n\u24d8\nPlatforms: Windows\nContributors: Praetorian\nVersion: 1.3\nCreated: 11 February 2020\nLast Modified: 24 October 2025\nVersion Permalink\nProcedure Examples\nID\tName\tDescription\nS1063\tBrute Ratel C4\t\nBrute Ratel C4 can decode Kerberos 5 tickets and convert it to hashcat format for subsequent cracking.[8]"
-  },
-  {
-    "source": "Kerberoasting.txt",
-    "chunk_index": 6,
-    "text": "S0363\tEmpire\t\nEmpire uses PowerSploit's Invoke-Kerberoast to request service tickets and return crackable ticket hashes.[9]"
-  },
-  {
-    "source": "Kerberoasting.txt",
-    "chunk_index": 7,
-    "text": "G0046\tFIN7\t\nFIN7 has used Kerberoasting PowerShell commands such as, Invoke-Kerberoast for credential access and to enable lateral movement.[10][11]"
+    "text": "ID: \u24d8\nTactic: Credential Access\n\u24d8\nPlatforms: Windows\nContributors: Praetorian\nVersion: 1.3\nCreated: 11 February 2020\nLast Modified: 24 October 2025\nVersion Permalink\nProcedure Examples\nID\tName\tDescription\nBrute Ratel C4 can decode Kerberos 5 tickets and convert it to hashcat format for subsequent cracking."
   },
   {
     "source": "Kerberoasting.txt",
     "chunk_index": 8,
-    "text": "S0357\tImpacket\t\nImpacket modules like GetUserSPNs can be used to get Service Principal Names (SPNs) for user accounts. The output is formatted to be compatible with cracking tools like John the Ripper and Hashcat.[12]"
-  },
-  {
-    "source": "Kerberoasting.txt",
-    "chunk_index": 9,
-    "text": "G0119\tIndrik Spider\t\nIndrik Spider has conducted Kerberoasting attacks using a module from GitHub.[13]"
-  },
-  {
-    "source": "Kerberoasting.txt",
-    "chunk_index": 10,
-    "text": "C0049\tLeviathan Australian Intrusions\t\nLeviathan used Kerberoasting techniques during Leviathan Australian Intrusions.[14]"
+    "text": "Impacket modules like GetUserSPNs can be used to get Service Principal Names (SPNs) for user accounts. The output is formatted to be compatible with cracking tools like John the Ripper and Hashcat."
   },
   {
     "source": "Kerberoasting.txt",
     "chunk_index": 11,
-    "text": "C0014\tOperation Wocao\t\nDuring Operation Wocao, threat actors used PowerSploit's Invoke-Kerberoast module to request encrypted service tickets and bruteforce the passwords of Windows service accounts offline.[15]"
-  },
-  {
-    "source": "Kerberoasting.txt",
-    "chunk_index": 12,
-    "text": "S0194\tPowerSploit\t\nPowerSploit's Invoke-Kerberoast module can request service tickets and return crackable ticket hashes.[16][7]"
-  },
-  {
-    "source": "Kerberoasting.txt",
-    "chunk_index": 13,
-    "text": "S1071\tRubeus\t\nRubeus can use the KerberosRequestorSecurityToken.GetRequest method to request kerberoastable service tickets.[17]"
-  },
-  {
-    "source": "Kerberoasting.txt",
-    "chunk_index": 14,
-    "text": "S0692\tSILENTTRINITY\t\nSILENTTRINITY contains a module to conduct Kerberoasting.[18]"
+    "text": "C0014\tOperation Wocao\t\nDuring Operation Wocao, threat actors used PowerSploit's Invoke-Kerberoast module to request encrypted service tickets and bruteforce the passwords of Windows service accounts offline."
   },
   {
     "source": "Kerberoasting.txt",
     "chunk_index": 15,
-    "text": "C0024\tSolarWinds Compromise\t\nDuring the SolarWinds Compromise, APT29 obtained Ticket Granting Service (TGS) tickets for Active Directory Service Principle Names to crack offline.[19]"
-  },
-  {
-    "source": "Kerberoasting.txt",
-    "chunk_index": 16,
-    "text": "G0102\tWizard Spider\t\nWizard Spider has used Rubeus, MimiKatz Kerberos module, and the Invoke-Kerberoast cmdlet to steal AES hashes.[20][21][22][23][24]"
+    "text": "C0024\tSolarWinds Compromise\t\nDuring the SolarWinds Compromise, APT29 obtained Ticket Granting Service (TGS) tickets for Active Directory Service Principle Names to crack offline."
   },
   {
     "source": "Kerberoasting.txt",
     "chunk_index": 17,
-    "text": "Mitigations\nID\tMitigation\tDescription\nM1041\tEncrypt Sensitive Information\t\nEnable AES Kerberos encryption (or another stronger encryption algorithm), rather than RC4, where possible.[2]"
+    "text": "Mitigations\nID\tMitigation\tDescription\nM1041\tEncrypt Sensitive Information\t\nEnable AES Kerberos encryption (or another stronger encryption algorithm), rather than RC4, where possible."
   },
   {
     "source": "Kerberoasting.txt",
     "chunk_index": 18,
-    "text": "M1027\tPassword Policies\t\nEnsure strong password length (ideally 25+ characters) and complexity for service accounts and that these passwords periodically expire.[2] Also consider using Group Managed Service Accounts or another third party product such as password vaulting.[2]"
+    "text": "M1027\tPassword Policies\t\nEnsure strong password length (ideally 25+ characters) and complexity for service accounts and that these passwords periodically expire. Also consider using Group Managed Service Accounts or another third party product such as password vaulting."
   },
   {
     "source": "Kerberoasting.txt",
     "chunk_index": 19,
-    "text": "M1026\tPrivileged Account Management\t\nLimit service accounts to minimal required privileges, including membership in privileged groups such as Domain Administrators.[2]"
+    "text": "M1026\tPrivileged Account Management\t\nLimit service accounts to minimal required privileges, including membership in privileged groups such as Domain Administrators."
   },
   {
     "source": "Kerberoasting.txt",
     "chunk_index": 20,
-    "text": "Detection Strategy\nID\tName\tAnalytic ID\tAnalytic Description\nDET0157\tDetect Kerberoasting Attempts (T1558.003)\tAN0444\t\nDetects Kerberoasting attempts by monitoring for anomalous Kerberos TGS requests (Event ID 4769) with RC4 encryption (etype 0x17), accounts requesting an unusual number of service tickets in a short period, or service accounts targeted outside normal usage baselines. Also correlates suspicious process activity (e.g., Mimikatz invoking LSASS access) with Kerberos ticket anomalies."
-  },
-  {
-    "source": "Kerberoasting.txt",
-    "chunk_index": 21,
-    "text": "References\nEmpireProject. (2016, October 31). Invoke-Kerberoast.ps1. Retrieved March 22, 2018.\nMetcalf, S. (2015, December 31). Cracking Kerberos TGS Tickets Using Kerberoast \u2013 Exploiting Kerberos to Compromise the Active Directory Domain. Retrieved March 22, 2018.\nBani, M. (2018, February 23). Detecting Kerberoasting activity using Azure Security Center. Retrieved March 23, 2018.\nMicrosoft. (n.d.). Service Principal Names. Retrieved March 22, 2018.\nMicrosoft. (2010, April 13). Service Principal"
-  },
-  {
-    "source": "Kerberoasting.txt",
-    "chunk_index": 22,
-    "text": "). Service Principal Names. Retrieved March 22, 2018.\nMicrosoft. (2010, April 13). Service Principal Names (SPNs) SetSPN Syntax (Setspn.exe). Retrieved March 22, 2018.\nMedin, T. (2014, November). Attacking Kerberos - Kicking the Guard Dog of Hades. Retrieved March 22, 2018.\nSchroeder, W. (2016, November 1). Kerberoasting Without Mimikatz. Retrieved September 23, 2024.\nHarbison, M. and Renals, P. (2022, July 5). When Pentest Tools Go Brutal: Red-Teaming Tool Being Abused by Malicious Actors. Retr"
-  },
-  {
-    "source": "Kerberoasting.txt",
-    "chunk_index": 23,
-    "text": "2022, July 5). When Pentest Tools Go Brutal: Red-Teaming Tool Being Abused by Malicious Actors. Retrieved February 1, 2023.\nSchroeder, W., Warner, J., Nelson, M. (n.d.). Github PowerShellEmpire. Retrieved April 28, 2016.\nLoui, E. and Reynolds, J. (2021, August 30). CARBON SPIDER Embraces Big Game Hunting, Part 1. Retrieved September 20, 2021.\nAbdo, B., et al. (2022, April 4). FIN7 Power Hour: Adversary Archaeology and the Evolution of FIN7. Retrieved April 5, 2022.\nSecureAuth. (n.d.). Retrieved "
-  },
-  {
-    "source": "Kerberoasting.txt",
-    "chunk_index": 24,
-    "text": "rsary Archaeology and the Evolution of FIN7. Retrieved April 5, 2022.\nSecureAuth. (n.d.). Retrieved January 15, 2019.\nMandiant Intelligence. (2022, June 2). To HADES and Back: UNC2165 Shifts to LOCKBIT to Evade Sanctions. Retrieved July 29, 2024.\nCISA et al. (2024, July 8). People\u2019s Republic of China (PRC) Ministry of State Security APT40 Tradecraft in Action. Retrieved February 3, 2025.\nDantzig, M. v., Schamper, E. (2019, December 19). Operation Wocao: Shining a light on one of China\u2019s hidden h"
-  },
-  {
-    "source": "Kerberoasting.txt",
-    "chunk_index": 25,
-    "text": "M. v., Schamper, E. (2019, December 19). Operation Wocao: Shining a light on one of China\u2019s hidden hacking groups. Retrieved October 8, 2020.\nSchroeder, W. & Hart M. (2016, October 31). Invoke-Kerberoast. Retrieved March 23, 2018.\nHarmj0y. (n.d.). Rubeus. Retrieved March 29, 2023.\nSalvati, M. (2019, August 6). SILENTTRINITY Modules. Retrieved March 24, 2022.\nMSTIC, CDOC, 365 Defender Research Team. (2021, January 20). Deep dive into the Solorigate second-stage activation: From SUNBURST to TEARDR"
-  },
-  {
-    "source": "Kerberoasting.txt",
-    "chunk_index": 26,
-    "text": ". (2021, January 20). Deep dive into the Solorigate second-stage activation: From SUNBURST to TEARDROP and Raindrop . Retrieved January 22, 2021.\nThe DFIR Report. (2020, October 8). Ryuk\u2019s Return. Retrieved October 9, 2020.\nKimberly Goody, Jeremy Kennelly, Joshua Shilko, Steve Elovitz, Douglas Bienstock. (2020, October 28). Unhappy Hour Special: KEGTAP and SINGLEMALT With a Ransomware Chaser. Retrieved October 28, 2020.\nDHS/CISA. (2020, October 28). Ransomware Activity Targeting the Healthcare a"
-  },
-  {
-    "source": "Kerberoasting.txt",
-    "chunk_index": 27,
-    "text": "ieved October 28, 2020.\nDHS/CISA. (2020, October 28). Ransomware Activity Targeting the Healthcare and Public Health Sector. Retrieved October 28, 2020.\nThe DFIR Report. (2020, November 5). Ryuk Speed Run, 2 Hours to Ransom. Retrieved November 6, 2020.\nShilko, J., et al. (2021, October 7). FIN12: The Prolific Ransomware Intrusion Threat Actor That Has Aggressively Pursued Healthcare Targets. Retrieved June 15, 2023."
-  },
-  {
-    "source": "Kerberoasting.txt",
-    "chunk_index": 28,
-    "text": "eved June 15, 2023."
+    "text": "Detection Strategy\nID\tName\tAnalytic ID\tAnalytic Description\nDEDetects Kerberoasting attempts by monitoring for anomalous Kerberos TGS requests (Event ID 4769) with RC4 encryption (etype 0x17), accounts requesting an unusual number of service tickets in a short period, or service accounts targeted outside normal usage baselines. Also correlates suspicious process activity (e.g., Mimikatz invoking LSASS access) with Kerberos ticket anomalies."
   },
   {
     "source": "OS-Credential-Dumping.txt",
     "chunk_index": 0,
-    "text": "OS Credential Dumping\nSub-techniques (8)\nID\tName\nT1003.001\tLSASS Memory\nT1003.002\tSecurity Account Manager\nT1003.003\tNTDS\nT1003.004\tLSA Secrets\nT1003.005\tCached Domain Credentials\nT1003.006\tDCSync\nT1003.007\tProc Filesystem\nT1003.008\t/etc/passwd and /etc/shadow\nAdversaries may attempt to dump credentials to obtain account login and credential material, normally in the form of a hash or a clear text password. Credentials can be obtained from OS caches, memory, or structures.[1] Credentials can the"
+    "text": "OS Credential Dumping\nSub-techniques (8)\nID\tName\nAdversaries may attempt to dump credentials to obtain account login and credential material, normally in the form of a hash or a clear text password. Credentials can be obtained from OS caches, memory, or structures. Credentials can then be used to perform Lateral Movement and access restricted information."
   },
   {
     "source": "OS-Credential-Dumping.txt",
     "chunk_index": 1,
-    "text": " password. Credentials can be obtained from OS caches, memory, or structures.[1] Credentials can then be used to perform Lateral Movement and access restricted information."
-  },
-  {
-    "source": "OS-Credential-Dumping.txt",
-    "chunk_index": 2,
     "text": "Several of the tools mentioned in associated sub-techniques may be used by both adversaries and professional security testers. Additional custom tools likely exist as well."
   },
   {
     "source": "OS-Credential-Dumping.txt",
-    "chunk_index": 3,
-    "text": "ID: T1003\nSub-techniques:  T1003.001, T1003.002, T1003.003, T1003.004, T1003.005, T1003.006, T1003.007, T1003.008\n\u24d8\nTactic: Credential Access\n\u24d8\nPlatforms: Linux, Windows, macOS\nContributors: Ed Williams, Trustwave, SpiderLabs; Tim (Wadhwa-)Brown; Vincent Le Toux; Yves Yonan\nVersion: 2.2\nCreated: 31 May 2017\nLast Modified: 24 October 2025\nVersion Permalink\nProcedure Examples\nID\tName\tDescription\nG0007\tAPT28\t\nAPT28 regularly deploys both publicly available (ex: Mimikatz) and custom password retriev"
-  },
-  {
-    "source": "OS-Credential-Dumping.txt",
-    "chunk_index": 4,
-    "text": "07\tAPT28\t\nAPT28 regularly deploys both publicly available (ex: Mimikatz) and custom password retrieval tools on victims.[2][3][4]"
-  },
-  {
-    "source": "OS-Credential-Dumping.txt",
-    "chunk_index": 5,
-    "text": "G0050\tAPT32\t\nAPT32 used GetPassword_x64 to harvest credentials.[5][6]"
-  },
-  {
-    "source": "OS-Credential-Dumping.txt",
-    "chunk_index": 6,
-    "text": "G0087\tAPT39\t\nAPT39 has used different versions of Mimikatz to obtain credentials.[7]"
-  },
-  {
-    "source": "OS-Credential-Dumping.txt",
-    "chunk_index": 7,
-    "text": "G0001\tAxiom\t\nAxiom has been known to dump credentials.[8]"
-  },
-  {
-    "source": "OS-Credential-Dumping.txt",
-    "chunk_index": 8,
-    "text": "G1043\tBlackByte\t\nBlackByte used tools such as Cobalt Strike and Mimikatz to dump credentials from victim systems.[9][10]"
-  },
-  {
-    "source": "OS-Credential-Dumping.txt",
-    "chunk_index": 9,
-    "text": "S0030\tCarbanak\t\nCarbanak obtains Windows logon password details.[11]"
-  },
-  {
-    "source": "OS-Credential-Dumping.txt",
-    "chunk_index": 10,
-    "text": "G1003\tEmber Bear\t\nEmber Bear gathers credential material from target systems, such as SSH keys, to facilitate access to victim environments.[12]"
-  },
-  {
-    "source": "OS-Credential-Dumping.txt",
-    "chunk_index": 11,
-    "text": "S0232\tHOMEFRY\t\nHOMEFRY can perform credential dumping.[13]"
-  },
-  {
-    "source": "OS-Credential-Dumping.txt",
-    "chunk_index": 12,
-    "text": "G0065\tLeviathan\t\nLeviathan has used publicly available tools to dump password hashes, including HOMEFRY.[14]"
-  },
-  {
-    "source": "OS-Credential-Dumping.txt",
-    "chunk_index": 13,
-    "text": "S1146\tMgBot\t\nMgBot includes modules for dumping and capturing credentials from process memory.[15]"
+    "chunk_index": 2,
+    "text": "ID: \u24d8\nTactic: Credential Access\n\u24d8\nPlatforms: Linux, Windows, macOS\nContributors: Ed Williams, Trustwave, SpiderLabs; Tim (Wadhwa-)Brown; Vincent Le Toux; Yves Yonan\nVersion: 2.2\nCreated: 31 May 2017\nLast Modified: 24 October 2025\nVersion Permalink\nProcedure Examples\nID\tName\tDescription\nAPT28 regularly deploys both publicly available (ex: Mimikatz) and custom password retrieval tools on victims."
   },
   {
     "source": "OS-Credential-Dumping.txt",
     "chunk_index": 14,
-    "text": "G0129\tMustang Panda\t\nMustang Panda utilized \"Hdump\" to dump credentials from memory.[16]"
-  },
-  {
-    "source": "OS-Credential-Dumping.txt",
-    "chunk_index": 15,
-    "text": "S0052\tOnionDuke\t\nOnionDuke steals credentials from its victims.[17]"
-  },
-  {
-    "source": "OS-Credential-Dumping.txt",
-    "chunk_index": 16,
-    "text": "S0048\tPinchDuke\t\nPinchDuke steals credentials from compromised hosts. PinchDuke's credential stealing functionality is believed to be based on the source code of the Pinch credential stealing malware (also known as LdPinch). Credentials targeted by PinchDuke include ones associated many sources such as WinInet Credential Cache, and Lightweight Directory Access Protocol (LDAP).[17]"
-  },
-  {
-    "source": "OS-Credential-Dumping.txt",
-    "chunk_index": 17,
-    "text": "G0033\tPoseidon Group\t\nPoseidon Group conducts credential dumping on victims, with a focus on obtaining credentials belonging to domain and database servers.[18]"
-  },
-  {
-    "source": "OS-Credential-Dumping.txt",
-    "chunk_index": 18,
-    "text": "S0379\tRevenge RAT\t\nRevenge RAT has a plugin for credential harvesting.[19]"
-  },
-  {
-    "source": "OS-Credential-Dumping.txt",
-    "chunk_index": 19,
-    "text": "G0054\tSowbug\t\nSowbug has used credential dumping tools.[20]"
-  },
-  {
-    "source": "OS-Credential-Dumping.txt",
-    "chunk_index": 20,
-    "text": "G1053\tStorm-0501\t\nStorm-0501 has used the SecretsDump module within Impacket can perform credential dumping to obtain account and password information.[21]"
-  },
-  {
-    "source": "OS-Credential-Dumping.txt",
-    "chunk_index": 21,
-    "text": "G0039\tSuckfly\t\nSuckfly used a signed credential-dumping tool to obtain victim account credentials.[22]"
+    "text": "PinchDuke steals credentials from compromised hosts. PinchDuke's credential stealing functionality is believed to be based on the source code of the Pinch credential stealing malware (also known as LdPinch). Credentials targeted by PinchDuke include ones associated many sources such as WinInet Credential Cache, and Lightweight Directory Access Protocol (LDAP)."
   },
   {
     "source": "OS-Credential-Dumping.txt",
     "chunk_index": 22,
-    "text": "G0131\tTonto Team\t\nTonto Team has used a variety of credential dumping tools.[23]"
-  },
-  {
-    "source": "OS-Credential-Dumping.txt",
-    "chunk_index": 23,
-    "text": "S0094\tTrojan.Karagany\t\nTrojan.Karagany can dump passwords and save them into \\ProgramData\\Mail\\MailAg\\pwds.txt.[24]"
+    "text": "Mitigations\nID\tMitigation\tDescription\nM1015\tActive Directory Configuration\t\nManage the access control list for \"Replicating Directory Changes All\" and other permissions associated with domain controller replication.   Consider adding users to the \"Protected Users\" Active Directory security group. This can help limit the caching of users' plaintext credentials."
   },
   {
     "source": "OS-Credential-Dumping.txt",
     "chunk_index": 24,
-    "text": "Mitigations\nID\tMitigation\tDescription\nM1015\tActive Directory Configuration\t\nManage the access control list for \"Replicating Directory Changes All\" and other permissions associated with domain controller replication. [25] [26] Consider adding users to the \"Protected Users\" Active Directory security group. This can help limit the caching of users' plaintext credentials.[27]"
-  },
-  {
-    "source": "OS-Credential-Dumping.txt",
-    "chunk_index": 25,
-    "text": "M1040\tBehavior Prevention on Endpoint\t\nOn Windows 10, enable Attack Surface Reduction (ASR) rules to secure LSASS and prevent credential stealing. [28]"
-  },
-  {
-    "source": "OS-Credential-Dumping.txt",
-    "chunk_index": 26,
-    "text": "M1043\tCredential Access Protection\t\nWith Windows 10, Microsoft implemented new protections called Credential Guard to protect the LSA secrets that can be used to obtain credentials through forms of credential dumping. It is not configured by default and has hardware and firmware system requirements. [29] It also does not protect against all forms of credential dumping. [30]"
-  },
-  {
-    "source": "OS-Credential-Dumping.txt",
-    "chunk_index": 27,
-    "text": "M1041\tEncrypt Sensitive Information\t\nEnsure Domain Controller backups are properly secured."
+    "text": "M1043\tCredential Access Protection\t\nWith Windows 10, Microsoft implemented new protections called Credential Guard to protect the LSA secrets that can be used to obtain credentials through forms of credential dumping. It is not configured by default and has hardware and firmware system requirements.  It also does not protect against all forms of credential dumping."
   },
   {
     "source": "OS-Credential-Dumping.txt",
     "chunk_index": 28,
-    "text": "M1028\tOperating System Configuration\t\nConsider disabling or restricting NTLM.[31] Consider disabling WDigest authentication.[32]"
+    "text": "M1026\tPrivileged Account Management\t\nWindows:\nDo not put user or admin domain accounts in the local administrator groups across systems unless they are tightly controlled, as this is often equivalent to having a local administrator account with the same password on all systems. Follow best practices for design and administration of an enterprise network to limit privileged account use across administrative tiers."
   },
   {
     "source": "OS-Credential-Dumping.txt",
     "chunk_index": 29,
-    "text": "M1027\tPassword Policies\t\nEnsure that local administrator accounts have complex, unique passwords across all systems on the network."
-  },
-  {
-    "source": "OS-Credential-Dumping.txt",
-    "chunk_index": 30,
-    "text": "M1026\tPrivileged Account Management\t\nWindows:\nDo not put user or admin domain accounts in the local administrator groups across systems unless they are tightly controlled, as this is often equivalent to having a local administrator account with the same password on all systems. Follow best practices for design and administration of an enterprise network to limit privileged account use across administrative tiers.[33]"
-  },
-  {
-    "source": "OS-Credential-Dumping.txt",
-    "chunk_index": 31,
     "text": "Linux:\nScraping the passwords from memory requires root privileges. Follow best practices in restricting access to privileged accounts to avoid hostile programs from accessing such sensitive regions of memory."
   },
   {
     "source": "OS-Credential-Dumping.txt",
-    "chunk_index": 32,
-    "text": "M1025\tPrivileged Process Integrity\t\nOn Windows 8.1 and Windows Server 2012 R2, enable Protected Process Light for LSA.[34]"
-  },
-  {
-    "source": "OS-Credential-Dumping.txt",
-    "chunk_index": 33,
+    "chunk_index": 31,
     "text": "M1017\tUser Training\t\nLimit credential overlap across accounts and systems by training users and administrators not to use the same password for multiple accounts."
   },
   {
     "source": "OS-Credential-Dumping.txt",
-    "chunk_index": 34,
-    "text": "Detection Strategy\nID\tName\tAnalytic ID\tAnalytic Description\nDET0234\tCredential Dumping via Sensitive Memory and Registry Access Correlation\tAN0648\t\nProcesses accessing LSASS memory or SAM registry hives outside of trusted security tools, often followed by file creation or lateral movement. Detects unauthorized access to sensitive OS subsystems for credential extraction."
+    "chunk_index": 32,
+    "text": "Detection Strategy\nID\tName\tAnalytic ID\tAnalytic Description\nDEProcesses accessing LSASS memory or SAM registry hives outside of trusted security tools, often followed by file creation or lateral movement. Detects unauthorized access to sensitive OS subsystems for credential extraction."
   },
   {
     "source": "OS-Credential-Dumping.txt",
-    "chunk_index": 35,
+    "chunk_index": 33,
     "text": "AN0649\t\nProcesses opening /proc//mem or /proc//maps targeting credential-storing services like sshd or login. Behavior often includes high privilege escalation and memory inspection tools such as gcore or gdb."
   },
   {
     "source": "OS-Credential-Dumping.txt",
-    "chunk_index": 36,
+    "chunk_index": 34,
     "text": "AN0650\t\nUnsigned processes accessing system memory or launching known credential scraping tools (e.g., osascript, dylib injections) to access the Keychain or sensitive memory regions."
   },
   {
     "source": "Pass-the-Hash.txt",
     "chunk_index": 0,
-    "text": "Use Alternate Authentication Material: Pass the Hash\nOther sub-techniques of Use Alternate Authentication Material (4)\nID\tName\nT1550.001\tApplication Access Token\nT1550.002\tPass the Hash\nT1550.003\tPass the Ticket\nT1550.004\tWeb Session Cookie\nAdversaries may \"pass the hash\" using stolen password hashes to move laterally within an environment, bypassing normal system access controls. Pass the hash (PtH) is a method of authenticating as a user without having access to the user's cleartext password. "
+    "text": "Use Alternate Authentication Material: Pass the Hash\nOther sub-techniques of Use Alternate Authentication Material (4)\nID\tName\nAdversaries may \"pass the hash\" using stolen password hashes to move laterally within an environment, bypassing normal system access controls. Pass the hash (PtH) is a method of authenticating as a user without having access to the user's cleartext password. This method bypasses standard authentication steps that require a cleartext password, moving directly into the por"
   },
   {
     "source": "Pass-the-Hash.txt",
     "chunk_index": 1,
-    "text": "tH) is a method of authenticating as a user without having access to the user's cleartext password. This method bypasses standard authentication steps that require a cleartext password, moving directly into the portion of the authentication that uses the password hash."
+    "text": "passes standard authentication steps that require a cleartext password, moving directly into the portion of the authentication that uses the password hash."
   },
   {
     "source": "Pass-the-Hash.txt",
@@ -1237,127 +712,32 @@
   {
     "source": "Pass-the-Hash.txt",
     "chunk_index": 3,
-    "text": "Adversaries may also use stolen password hashes to \"overpass the hash.\" Similar to PtH, this involves using a password hash to authenticate as a user but also uses the password hash to create a valid Kerberos ticket. This ticket can then be used to perform Pass the Ticket attacks.[1]"
+    "text": "Adversaries may also use stolen password hashes to \"overpass the hash.\" Similar to PtH, this involves using a password hash to authenticate as a user but also uses the password hash to create a valid Kerberos ticket. This ticket can then be used to perform Pass the Ticket attacks."
   },
   {
     "source": "Pass-the-Hash.txt",
     "chunk_index": 4,
-    "text": "ID: T1550.002\nSub-technique of:  T1550\n\u24d8\nTactic: Lateral Movement\n\u24d8\nPlatforms: Windows\nContributors: Blake Strom, Microsoft 365 Defender; Travis Smith, Tripwire\nVersion: 2.0\nCreated: 30 January 2020\nLast Modified: 12 May 2026\nVersion Permalink\nProcedure Examples\nID\tName\tDescription\nC0063\t2025 Poland Wiper Attacks\t\nDuring the 2025 Poland Wiper Attacks, the adversaries attempted to reuse password hash values to gain access to other systems.[2]"
-  },
-  {
-    "source": "Pass-the-Hash.txt",
-    "chunk_index": 5,
-    "text": "G0006\tAPT1\t\nThe APT1 group is known to have used pass the hash.[3]"
-  },
-  {
-    "source": "Pass-the-Hash.txt",
-    "chunk_index": 6,
-    "text": "G0007\tAPT28\t\nAPT28 has used pass the hash for lateral movement.[4]"
-  },
-  {
-    "source": "Pass-the-Hash.txt",
-    "chunk_index": 7,
-    "text": "G0050\tAPT32\t\nAPT32 has used pass the hash for lateral movement.[5]"
-  },
-  {
-    "source": "Pass-the-Hash.txt",
-    "chunk_index": 8,
-    "text": "G0096\tAPT41\t\nAPT41 uses tools such as Mimikatz to enable lateral movement via captured password hashes.[6]"
+    "text": "ID: \u24d8\nTactic: Lateral Movement\n\u24d8\nPlatforms: Windows\nContributors: Blake Strom, Microsoft 365 Defender; Travis Smith, Tripwire\nVersion: 2.0\nCreated: 30 January 2020\nLast Modified: 12 May 2026\nVersion Permalink\nProcedure Examples\nID\tName\tDescription\nC0063\t2025 Poland Wiper Attacks\t\nDuring the 2025 Poland Wiper Attacks, the adversaries attempted to reuse password hash values to gain access to other systems."
   },
   {
     "source": "Pass-the-Hash.txt",
     "chunk_index": 9,
-    "text": "G0143\tAquatic Panda\t\nAquatic Panda used a registry edit to enable a Windows feature called RestrictedAdmin in victim environments. This change allowed Aquatic Panda to leverage \"pass the hash\" mechanisms as the alteration allows for RDP connections with a valid account name and hash only, without possessing a cleartext password value.[7]"
-  },
-  {
-    "source": "Pass-the-Hash.txt",
-    "chunk_index": 10,
-    "text": "S1081\tBADHATCH\t\nBADHATCH can perform pass the hash on compromised machines with x64 versions.[8]"
-  },
-  {
-    "source": "Pass-the-Hash.txt",
-    "chunk_index": 11,
-    "text": "G0114\tChimera\t\nChimera has dumped password hashes for use in pass the hash authentication attacks.[9]"
-  },
-  {
-    "source": "Pass-the-Hash.txt",
-    "chunk_index": 12,
-    "text": "S0154\tCobalt Strike\t\nCobalt Strike can perform pass the hash.[10]"
-  },
-  {
-    "source": "Pass-the-Hash.txt",
-    "chunk_index": 13,
-    "text": "S0488\tCrackMapExec\t\nCrackMapExec can pass the hash to authenticate via SMB.[11]"
-  },
-  {
-    "source": "Pass-the-Hash.txt",
-    "chunk_index": 14,
-    "text": "G1003\tEmber Bear\t\nEmber Bear has used pass-the-hash techniques for lateral movement in victim environments.[12]"
-  },
-  {
-    "source": "Pass-the-Hash.txt",
-    "chunk_index": 15,
-    "text": "S0363\tEmpire\t\nEmpire can perform pass the hash attacks.[13]"
-  },
-  {
-    "source": "Pass-the-Hash.txt",
-    "chunk_index": 16,
-    "text": "G1016\tFIN13\t\nFIN13 has used the PowerShell utility Invoke-SMBExec to execute the pass the hash method for lateral movement within an compromised environment.[14]"
-  },
-  {
-    "source": "Pass-the-Hash.txt",
-    "chunk_index": 17,
-    "text": "G0093\tGALLIUM\t\nGALLIUM used dumped hashes to authenticate to other machines via pass the hash.[15]"
-  },
-  {
-    "source": "Pass-the-Hash.txt",
-    "chunk_index": 18,
-    "text": "S0376\tHOPLIGHT\t\nHOPLIGHT has been observed loading several APIs associated with Pass the Hash.[16]"
-  },
-  {
-    "source": "Pass-the-Hash.txt",
-    "chunk_index": 19,
-    "text": "G0094\tKimsuky\t\nKimsuky has used pass the hash for authentication to remote access software used in C2.[17]"
-  },
-  {
-    "source": "Pass-the-Hash.txt",
-    "chunk_index": 20,
-    "text": "S0002\tMimikatz\t\nMimikatz's SEKURLSA::Pth module can impersonate a user, with only a password hash, to execute arbitrary commands.[18][19][20]"
+    "text": "Aquatic Panda used a registry edit to enable a Windows feature called RestrictedAdmin in victim environments. This change allowed Aquatic Panda to leverage \"pass the hash\" mechanisms as the alteration allows for RDP connections with a valid account name and hash only, without possessing a cleartext password value."
   },
   {
     "source": "Pass-the-Hash.txt",
     "chunk_index": 21,
-    "text": "C0002\tNight Dragon\t\nDuring Night Dragon, threat actors used pass-the-hash tools to obtain authenticated access to sensitive internal desktops and servers.[21]"
-  },
-  {
-    "source": "Pass-the-Hash.txt",
-    "chunk_index": 22,
-    "text": "C0061\tOperation Digital Eye\t\nDuring Operation Digital Eye, threat actors used a pass-the-hash capability to move laterally.[22]"
-  },
-  {
-    "source": "Pass-the-Hash.txt",
-    "chunk_index": 23,
-    "text": "S0122\tPass-The-Hash Toolkit\t\nPass-The-Hash Toolkit can perform pass the hash.[3]"
-  },
-  {
-    "source": "Pass-the-Hash.txt",
-    "chunk_index": 24,
-    "text": "S0378\tPoshC2\t\nPoshC2 has a number of modules that leverage pass the hash for lateral movement.[23]"
+    "text": "C0002\tNight Dragon\t\nDuring Night Dragon, threat actors used pass-the-hash tools to obtain authenticated access to sensitive internal desktops and servers."
   },
   {
     "source": "Pass-the-Hash.txt",
     "chunk_index": 25,
-    "text": "G0102\tWizard Spider\t\nWizard Spider has used the Invoke-SMBExec PowerShell cmdlet to execute the pass-the-hash technique and utilized stolen password hashes to move laterally.[24]"
+    "text": "Wizard Spider has used the Invoke-SMBExec PowerShell cmdlet to execute the pass-the-hash technique and utilized stolen password hashes to move laterally."
   },
   {
     "source": "Pass-the-Hash.txt",
     "chunk_index": 26,
     "text": "Mitigations\nID\tMitigation\tDescription\nM1026\tPrivileged Account Management\t\nLimit credential overlap across systems to prevent the damage of credential compromise and reduce the adversary's ability to perform Lateral Movement between systems."
-  },
-  {
-    "source": "Pass-the-Hash.txt",
-    "chunk_index": 27,
-    "text": "M1051\tUpdate Software\t\nApply patch KB2871997 to Windows 7 and higher systems to limit the default access of accounts in the local administrator group.[25]"
   },
   {
     "source": "Pass-the-Hash.txt",
@@ -1367,142 +747,72 @@
   {
     "source": "Pass-the-Hash.txt",
     "chunk_index": 29,
-    "text": "Through GPO: Computer Configuration > [Policies] > Administrative Templates > SCM: Pass the Hash Mitigations: Apply UAC restrictions to local accounts on network logons.[26]"
-  },
-  {
-    "source": "Pass-the-Hash.txt",
-    "chunk_index": 30,
-    "text": "M1018\tUser Account Management\t\nDo not allow a domain user to be in the local administrator group on multiple systems."
+    "text": "Through GPO: Computer Configuration > [Policies] > Administrative Templates > SCM: Pass the Hash Mitigations: Apply UAC restrictions to local accounts on network logons."
   },
   {
     "source": "Pass-the-Hash.txt",
     "chunk_index": 31,
-    "text": "Detection Strategy\nID\tName\tAnalytic ID\tAnalytic Description\nDET0409\tDetection Strategy for T1550.002 - Pass the Hash (Windows)\tAN1144\t\nDetects anomalous NTLM LogonType 3 authentications that occur without accompanying domain logon events, especially from lateral systems or involving built-in administrative tools. Monitors for mismatches between source user context and system being accessed. Correlates LogonSession creation, NTLM authentications, and process/service initiation to identify suspici"
+    "text": "Detection Strategy\nID\tName\tAnalytic ID\tAnalytic Description\nDEDetects anomalous NTLM LogonType 3 authentications that occur without accompanying domain logon events, especially from lateral systems or involving built-in administrative tools. Monitors for mismatches between source user context and system being accessed. Correlates LogonSession creation, NTLM authentications, and process/service initiation to identify suspicious use of stolen password hashes for remote access or service logon with"
   },
   {
     "source": "Pass-the-Hash.txt",
     "chunk_index": 32,
-    "text": "ates LogonSession creation, NTLM authentications, and process/service initiation to identify suspicious use of stolen password hashes for remote access or service logon without password entry. Detects overpass-the-hash by combining Kerberos ticket issuance with NTLM-based lateral movement."
+    "text": "tiation to identify suspicious use of stolen password hashes for remote access or service logon without password entry. Detects overpass-the-hash by combining Kerberos ticket issuance with NTLM-based lateral movement."
   },
   {
     "source": "Password-Spraying.txt",
     "chunk_index": 0,
-    "text": "Brute Force: Password Spraying\nOther sub-techniques of Brute Force (4)\nID\tName\nT1110.001\tPassword Guessing\nT1110.002\tPassword Cracking\nT1110.003\tPassword Spraying\nT1110.004\tCredential Stuffing\nAdversaries may use a single or small list of commonly used passwords against many different accounts to attempt to acquire valid account credentials. Password spraying uses one password (e.g. 'Password01'), or a small list of commonly used passwords, that may match the complexity policy of the domain. Log"
+    "text": "Brute Force: Password Spraying\nOther sub-techniques of Brute Force (4)\nID\tName\nAdversaries may use a single or small list of commonly used passwords against many different accounts to attempt to acquire valid account credentials. Password spraying uses one password (e.g. 'Password01'), or a small list of commonly used passwords, that may match the complexity policy of the domain. Logins are attempted with that password against many different accounts on a network to avoid account lockouts that w"
   },
   {
     "source": "Password-Spraying.txt",
     "chunk_index": 1,
-    "text": " or a small list of commonly used passwords, that may match the complexity policy of the domain. Logins are attempted with that password against many different accounts on a network to avoid account lockouts that would normally occur when brute forcing a single account with many passwords. [1]"
-  },
-  {
-    "source": "Password-Spraying.txt",
-    "chunk_index": 2,
-    "text": "Typically, management services over commonly used ports are used when password spraying. Commonly targeted services include the following:"
+    "text": "ted with that password against many different accounts on a network to avoid account lockouts that would normally occur when brute forcing a single account with many passwords."
   },
   {
     "source": "Password-Spraying.txt",
     "chunk_index": 3,
-    "text": "SSH (22/TCP)\nTelnet (23/TCP)\nFTP (21/TCP)\nNetBIOS / SMB / Samba (139/TCP & 445/TCP)\nLDAP (389/TCP)\nKerberos (88/TCP)\nRDP / Terminal Services (3389/TCP)\nHTTP/HTTP Management Services (80/TCP & 443/TCP)\nMSSQL (1433/TCP)\nOracle (1521/TCP)\nMySQL (3306/TCP)\nVNC (5900/TCP)\nIn addition to management services, adversaries may \"target single sign-on (SSO) and cloud-based applications utilizing federated authentication protocols,\" as well as externally facing email applications, such as Office 365.[2]"
+    "text": "SSH (22/TCP)\nTelnet (23/TCP)\nFTP (21/TCP)\nNetBIOS / SMB / Samba (139/TCP & 445/TCP)\nLDAP (389/TCP)\nKerberos (88/TCP)\nRDP / Terminal Services (3389/TCP)\nHTTP/HTTP Management Services (80/TCP & 443/TCP)\nMSSQL (1433/TCP)\nOracle (1521/TCP)\nMySQL (3306/TCP)\nVNC (5900/TCP)\nIn addition to management services, adversaries may \"target single sign-on (SSO) and cloud-based applications utilizing federated authentication protocols,\" as well as externally facing email applications, such as Office 365."
   },
   {
     "source": "Password-Spraying.txt",
     "chunk_index": 4,
-    "text": "In order to avoid detection thresholds, adversaries may deliberately throttle password spraying attempts to avoid triggering security alerting. Additionally, adversaries may leverage LDAP and Kerberos authentication attempts, which are less likely to trigger high-visibility events such as Windows \"logon failure\" event ID 4625 that is commonly triggered by failed SMB connection attempts.[3]"
+    "text": "In order to avoid detection thresholds, adversaries may deliberately throttle password spraying attempts to avoid triggering security alerting. Additionally, adversaries may leverage LDAP and Kerberos authentication attempts, which are less likely to trigger high-visibility events such as Windows \"logon failure\" event ID 4625 that is commonly triggered by failed SMB connection attempts."
   },
   {
     "source": "Password-Spraying.txt",
     "chunk_index": 5,
-    "text": "ID: T1110.003\nSub-technique of:  T1110\n\u24d8\nTactic: Credential Access\n\u24d8\nPlatforms: Containers, ESXi, IaaS, Identity Provider, Linux, Network Devices, Office Suite, SaaS, Windows, macOS\nContributors: John Strand; Microsoft Threat Intelligence Center (MSTIC)\nVersion: 1.8\nCreated: 11 February 2020\nLast Modified: 24 October 2025\nVersion Permalink\nProcedure Examples\nID\tName\tDescription\nG1030\tAgrius\t\nAgrius engaged in password spraying via SMB in victim environments.[4]"
+    "text": "ID: \u24d8\nTactic: Credential Access\n\u24d8\nPlatforms: Containers, ESXi, IaaS, Identity Provider, Linux, Network Devices, Office Suite, SaaS, Windows, macOS\nContributors: John Strand; Microsoft Threat Intelligence Center (MSTIC)\nVersion: 1.8\nCreated: 11 February 2020\nLast Modified: 24 October 2025\nVersion Permalink\nProcedure Examples\nID\tName\tDescription\nAgrius engaged in password spraying via SMB in victim environments."
   },
   {
     "source": "Password-Spraying.txt",
     "chunk_index": 6,
-    "text": "G0007\tAPT28\t\nAPT28 has used a brute-force/password-spray tooling that operated in two modes: in password-spraying mode it conducted approximately four authentication attempts per hour per targeted account over the course of several days or weeks.[5][6] APT28 has also used a Kubernetes cluster to conduct distributed, large-scale password spray attacks.[7]"
+    "text": "APT28 has used a brute-force/password-spray tooling that operated in two modes: in password-spraying mode it conducted approximately four authentication attempts per hour per targeted account over the course of several days or weeks. APT28 has also used a Kubernetes cluster to conduct distributed, large-scale password spray attacks."
   },
   {
     "source": "Password-Spraying.txt",
     "chunk_index": 7,
-    "text": "C0051\tAPT28 Nearest Neighbor Campaign\t\nDuring APT28 Nearest Neighbor Campaign, APT28 performed password-spray attacks against public facing services to validate credentials.[8]"
-  },
-  {
-    "source": "Password-Spraying.txt",
-    "chunk_index": 8,
-    "text": "G0016\tAPT29\t\nAPT29 has conducted brute force password spray attacks.[9][10][11]"
-  },
-  {
-    "source": "Password-Spraying.txt",
-    "chunk_index": 9,
-    "text": "G0064\tAPT33\t\nAPT33 has used password spraying to gain access to target systems.[12][13]"
-  },
-  {
-    "source": "Password-Spraying.txt",
-    "chunk_index": 10,
-    "text": "S0606\tBad Rabbit\t\nBad Rabbit\u2019s infpub.dat file uses NTLM login credentials to brute force Windows machines.[14]"
-  },
-  {
-    "source": "Password-Spraying.txt",
-    "chunk_index": 11,
-    "text": "G0114\tChimera\t\nChimera has used multiple password spraying attacks against victim's remote services to obtain valid user and administrator accounts.[15]"
-  },
-  {
-    "source": "Password-Spraying.txt",
-    "chunk_index": 12,
-    "text": "S0488\tCrackMapExec\t\nCrackMapExec can brute force credential authentication by using a supplied list of usernames and a single password.[16]"
-  },
-  {
-    "source": "Password-Spraying.txt",
-    "chunk_index": 13,
-    "text": "G1003\tEmber Bear\t\nEmber Bear has conducted password spraying against Outlook Web Access (OWA) infrastructure to identify valid user names and passwords.[17]"
-  },
-  {
-    "source": "Password-Spraying.txt",
-    "chunk_index": 14,
-    "text": "G0125\tHAFNIUM\t\nHAFNIUM has gained initial access through password spray attacks.[18]"
-  },
-  {
-    "source": "Password-Spraying.txt",
-    "chunk_index": 15,
-    "text": "G1001\tHEXANE\t\nHEXANE has used password spraying attacks to obtain valid credentials.[19]"
+    "text": "C0051\tAPT28 Nearest Neighbor Campaign\t\nDuring APT28 Nearest Neighbor Campaign, APT28 performed password-spray attacks against public facing services to validate credentials."
   },
   {
     "source": "Password-Spraying.txt",
     "chunk_index": 16,
-    "text": "G0032\tLazarus Group\t\nLazarus Group malware attempts to connect to Windows shares for lateral movement by using a generated list of usernames, which center around permutations of the username Administrator, and weak passwords.[20][21]"
-  },
-  {
-    "source": "Password-Spraying.txt",
-    "chunk_index": 17,
-    "text": "G0077\tLeafminer\t\nLeafminer used a tool called Total SMB BruteForcer to perform internal password spraying.[22]"
-  },
-  {
-    "source": "Password-Spraying.txt",
-    "chunk_index": 18,
-    "text": "S0362\tLinux Rabbit\t\nLinux Rabbit brute forces SSH passwords in order to attempt to gain access and install its malware onto the server. [23]"
-  },
-  {
-    "source": "Password-Spraying.txt",
-    "chunk_index": 19,
-    "text": "S0413\tMailSniper\t\nMailSniper can be used for password spraying against Exchange and Office 365.[24]"
+    "text": "Lazarus Group malware attempts to connect to Windows shares for lateral movement by using a generated list of usernames, which center around permutations of the username Administrator, and weak passwords."
   },
   {
     "source": "Password-Spraying.txt",
     "chunk_index": 20,
-    "text": "C0055\tQuad7 Activity\t\nQuad7 Activity has conducted a throttled variant of password spraying techniques that only utilized a single attempt to sign in within a 24-hour time period, eluding brute force detection thresholds.[3]"
-  },
-  {
-    "source": "Password-Spraying.txt",
-    "chunk_index": 21,
-    "text": "G0122\tSilent Librarian\t\nSilent Librarian has used collected lists of names and e-mail accounts to use in password spraying attacks against private sector targets.[25]"
+    "text": "C0055\tQuad7 Activity\t\nQuad7 Activity has conducted a throttled variant of password spraying techniques that only utilized a single attempt to sign in within a 24-hour time period, eluding brute force detection thresholds."
   },
   {
     "source": "Password-Spraying.txt",
     "chunk_index": 22,
-    "text": "Mitigations\nID\tMitigation\tDescription\nM1036\tAccount Use Policies\t\nSet account lockout policies after a certain number of failed login attempts to prevent passwords from being guessed. Too strict a policy may create a denial of service condition and render environments un-usable, with all accounts used in the brute force being locked-out. Use conditional access policies to block logins from non-compliant devices or from outside defined organization IP ranges.[26] Consider blocking risky authentic"
+    "text": "Mitigations\nID\tMitigation\tDescription\nM1036\tAccount Use Policies\t\nSet account lockout policies after a certain number of failed login attempts to prevent passwords from being guessed. Too strict a policy may create a denial of service condition and render environments un-usable, with all accounts used in the brute force being locked-out. Use conditional access policies to block logins from non-compliant devices or from outside defined organization IP ranges. Consider blocking risky authenticatio"
   },
   {
     "source": "Password-Spraying.txt",
     "chunk_index": 23,
-    "text": "pliant devices or from outside defined organization IP ranges.[26] Consider blocking risky authentication requests, such as those originating from anonymizing services/proxies.[27]"
+    "text": "pliant devices or from outside defined organization IP ranges. Consider blocking risky authentication requests, such as those originating from anonymizing services/proxies."
   },
   {
     "source": "Password-Spraying.txt",
@@ -1511,23 +821,8 @@
   },
   {
     "source": "Password-Spraying.txt",
-    "chunk_index": 25,
-    "text": "M1027\tPassword Policies\t\nRefer to NIST guidelines when creating password policies. [28]"
-  },
-  {
-    "source": "Password-Spraying.txt",
     "chunk_index": 26,
-    "text": "Detection Strategy\nID\tName\tAnalytic ID\tAnalytic Description\nDET0487\tDistributed Password Spraying via Authentication Failures Across Multiple Accounts\tAN1336\t\nA high volume of authentication failures using a single password (or small set) across many different user accounts within a defined time window"
-  },
-  {
-    "source": "Password-Spraying.txt",
-    "chunk_index": 27,
-    "text": "AN1337\t\nAuthentication failures across different accounts using a repeated or similar password via SSH or PAM stack within a short window"
-  },
-  {
-    "source": "Password-Spraying.txt",
-    "chunk_index": 28,
-    "text": "AN1338\t\nMultiple failed login attempts across different users using common password patterns (e.g., 'Welcome2023')"
+    "text": "Detection Strategy\nID\tName\tAnalytic ID\tAnalytic Description\nDEA high volume of authentication failures using a single password (or small set) across many different user accounts within a defined time window"
   },
   {
     "source": "Password-Spraying.txt",
@@ -1535,553 +830,163 @@
     "text": "AN1339\t\nSign-in failures across enterprise SSO applications or SaaS platforms from same IP address using the same password against multiple user identities"
   },
   {
-    "source": "Password-Spraying.txt",
-    "chunk_index": 30,
-    "text": "AN1340\t\nAuthentication failure logs on routers/switches showing repeated use of default or common passwords across multiple accounts"
-  },
-  {
-    "source": "Password-Spraying.txt",
-    "chunk_index": 31,
-    "text": "AN1341\t\nRepeated failed authentication attempts to container APIs, control planes, or login shells across many user names using same password"
-  },
-  {
-    "source": "Password-Spraying.txt",
-    "chunk_index": 32,
-    "text": "AN1342\t\nFailed authentication attempts across user mailboxes using identical or common passwords (e.g., OWA brute attempts)"
-  },
-  {
-    "source": "Password-Spraying.txt",
-    "chunk_index": 33,
-    "text": "AN1343\t\nSaaS applications receiving authentication failures for dozens of accounts using same password or login signature"
-  },
-  {
     "source": "Permission-Groups-Discovery.txt",
     "chunk_index": 0,
-    "text": "Permission Groups Discovery\nSub-techniques (3)\nID\tName\nT1069.001\tLocal Groups\nT1069.002\tDomain Groups\nT1069.003\tCloud Groups\nAdversaries may attempt to discover group and permission settings. This information can help adversaries determine which user accounts and groups are available, the membership of users in particular groups, and which users and groups have elevated permissions."
+    "text": "Permission Groups Discovery\nSub-techniques (3)\nID\tName\nAdversaries may attempt to discover group and permission settings. This information can help adversaries determine which user accounts and groups are available, the membership of users in particular groups, and which users and groups have elevated permissions."
   },
   {
     "source": "Permission-Groups-Discovery.txt",
     "chunk_index": 1,
-    "text": "Adversaries may attempt to discover group permission settings in many different ways. This data may provide the adversary with information about the compromised environment that can be used in follow-on activity and targeting.[1]"
+    "text": "Adversaries may attempt to discover group permission settings in many different ways. This data may provide the adversary with information about the compromised environment that can be used in follow-on activity and targeting."
   },
   {
     "source": "Permission-Groups-Discovery.txt",
     "chunk_index": 2,
-    "text": "ID: T1069\nSub-techniques:  T1069.001, T1069.002, T1069.003\n\u24d8\nTactic: Discovery\n\u24d8\nPlatforms: Containers, IaaS, Identity Provider, Linux, Office Suite, SaaS, Windows, macOS\nContributors: Daniel Prizmant, Palo Alto Networks; Microsoft Threat Intelligence Center (MSTIC); Yuval Avrahami, Palo Alto Networks\nVersion: 2.6\nCreated: 31 May 2017\nLast Modified: 24 October 2025\nVersion Permalink\nProcedure Examples\nID\tName\tDescription\nG0022\tAPT3\t\nAPT3 has a tool that can enumerate the permissions associated w"
-  },
-  {
-    "source": "Permission-Groups-Discovery.txt",
-    "chunk_index": 3,
-    "text": "ples\nID\tName\tDescription\nG0022\tAPT3\t\nAPT3 has a tool that can enumerate the permissions associated with Windows groups.[2]"
-  },
-  {
-    "source": "Permission-Groups-Discovery.txt",
-    "chunk_index": 4,
-    "text": "G0096\tAPT41\t\nAPT41 used net group commands to enumerate various Windows user groups and permissions.[3]"
-  },
-  {
-    "source": "Permission-Groups-Discovery.txt",
-    "chunk_index": 5,
-    "text": "S0335\tCarbon\t\nCarbon uses the net group command.[4]"
-  },
-  {
-    "source": "Permission-Groups-Discovery.txt",
-    "chunk_index": 6,
-    "text": "G1016\tFIN13\t\nFIN13 has enumerated all users and roles from a victim's main treasury system.[5]"
-  },
-  {
-    "source": "Permission-Groups-Discovery.txt",
-    "chunk_index": 7,
-    "text": "S0483\tIcedID\t\nIcedID has the ability to identify Workgroup membership.[6]"
-  },
-  {
-    "source": "Permission-Groups-Discovery.txt",
-    "chunk_index": 8,
-    "text": "S0233\tMURKYTOP\t\nMURKYTOP has the capability to retrieve information about groups.[7]"
-  },
-  {
-    "source": "Permission-Groups-Discovery.txt",
-    "chunk_index": 9,
-    "text": "G1015\tScattered Spider\t\nScattered Spider has enumerated the vSphere Admins and ESX Admins groups in targeted environments.[8]"
-  },
-  {
-    "source": "Permission-Groups-Discovery.txt",
-    "chunk_index": 10,
-    "text": "S0445\tShimRatReporter\t\nShimRatReporter gathered the local privileges for the infected host.[9]"
+    "text": "ID: \u24d8\nTactic: Discovery\n\u24d8\nPlatforms: Containers, IaaS, Identity Provider, Linux, Office Suite, SaaS, Windows, macOS\nContributors: Daniel Prizmant, Palo Alto Networks; Microsoft Threat Intelligence Center (MSTIC); Yuval Avrahami, Palo Alto Networks\nVersion: 2.6\nCreated: 31 May 2017\nLast Modified: 24 October 2025\nVersion Permalink\nProcedure Examples\nID\tName\tDescription\nAPT3 has a tool that can enumerate the permissions associated with Windows groups."
   },
   {
     "source": "Permission-Groups-Discovery.txt",
     "chunk_index": 11,
-    "text": "S0623\tSiloscape\t\nSiloscape checks for Kubernetes node permissions.[10]"
-  },
-  {
-    "source": "Permission-Groups-Discovery.txt",
-    "chunk_index": 12,
-    "text": "C0024\tSolarWinds Compromise\t\nDuring the SolarWinds Compromise, APT29 used the Get-ManagementRoleAssignment PowerShell cmdlet to enumerate Exchange management role assignments through an Exchange Management Shell.[11]"
-  },
-  {
-    "source": "Permission-Groups-Discovery.txt",
-    "chunk_index": 13,
-    "text": "G0092\tTA505\t\nTA505 has used TinyMet to enumerate members of privileged groups.[12] TA505 has also run net group /domain.[13]"
-  },
-  {
-    "source": "Permission-Groups-Discovery.txt",
-    "chunk_index": 14,
-    "text": "S0266\tTrickBot\t\nTrickBot can identify the groups the user on a compromised host belongs to.[14]"
-  },
-  {
-    "source": "Permission-Groups-Discovery.txt",
-    "chunk_index": 15,
-    "text": "G1017\tVolt Typhoon\t\nVolt Typhoon has used commercial tools, LOTL utilities, and appliances already present on the system for group and user discovery.[15]"
+    "text": "C0024\tSolarWinds Compromise\t\nDuring the SolarWinds Compromise, APT29 used the Get-ManagementRoleAssignment PowerShell cmdlet to enumerate Exchange management role assignments through an Exchange Management Shell."
   },
   {
     "source": "Permission-Groups-Discovery.txt",
     "chunk_index": 16,
-    "text": "Mitigations\nThis type of attack technique cannot be easily mitigated with preventive controls since it is based on the abuse of system features."
+    "text": "Detection Strategy\nID\tName\tAnalytic ID\tAnalytic Description\nDEDetection of adversary enumeration of domain or local group memberships via native tools such as net.exe, PowerShell, or WMI. This activity may precede lateral movement or privilege escalation."
   },
   {
     "source": "Permission-Groups-Discovery.txt",
     "chunk_index": 17,
-    "text": "Detection Strategy\nID\tName\tAnalytic ID\tAnalytic Description\nDET0179\tBehavioral Detection of Permission Groups Discovery\tAN0507\t\nDetection of adversary enumeration of domain or local group memberships via native tools such as net.exe, PowerShell, or WMI. This activity may precede lateral movement or privilege escalation."
-  },
-  {
-    "source": "Permission-Groups-Discovery.txt",
-    "chunk_index": 18,
     "text": "AN0508\t\nDetection of group enumeration using commands like 'id', 'groups', or 'getent group', often followed by privilege escalation or SSH lateral movement."
   },
   {
-    "source": "Permission-Groups-Discovery.txt",
-    "chunk_index": 19,
-    "text": "AN0509\t\nGroup membership checks via 'dscl', 'dscacheutil', or 'id', typically executed via terminal or automation scripts."
-  },
-  {
     "source": "Valid-Accounts.txt",
     "chunk_index": 0,
-    "text": "Valid Accounts\nSub-techniques (4)\nID\tName\nT1078.001\tDefault Accounts\nT1078.002\tDomain Accounts\nT1078.003\tLocal Accounts\nT1078.004\tCloud Accounts\nAdversaries may obtain and abuse credentials of existing accounts as a means of gaining Initial Access, Persistence, Privilege Escalation, or Defense Evasion. Compromised credentials may be used to bypass access controls placed on various resources on systems within the network and may even be used for persistent access to remote systems and externally "
+    "text": "Valid Accounts\nSub-techniques (4)\nID\tName\nAdversaries may obtain and abuse credentials of existing accounts as a means of gaining Initial Access, Persistence, Privilege Escalation, or Defense Evasion. Compromised credentials may be used to bypass access controls placed on various resources on systems within the network and may even be used for persistent access to remote systems and externally available services, such as VPNs, Outlook Web Access, network devices, and remote desktop. Compromised "
   },
   {
     "source": "Valid-Accounts.txt",
     "chunk_index": 1,
-    "text": "tems within the network and may even be used for persistent access to remote systems and externally available services, such as VPNs, Outlook Web Access, network devices, and remote desktop.[1] Compromised credentials may also grant an adversary increased privilege to specific systems or access to restricted areas of the network. Adversaries may choose not to use malware or tools in conjunction with the legitimate access those credentials provide to make it harder to detect their presence."
+    "text": "ilable services, such as VPNs, Outlook Web Access, network devices, and remote desktop. Compromised credentials may also grant an adversary increased privilege to specific systems or access to restricted areas of the network. Adversaries may choose not to use malware or tools in conjunction with the legitimate access those credentials provide to make it harder to detect their presence."
   },
   {
     "source": "Valid-Accounts.txt",
     "chunk_index": 2,
-    "text": "th the legitimate access those credentials provide to make it harder to detect their presence."
+    "text": "In some cases, adversaries may abuse inactive accounts: for example, those belonging to individuals who are no longer part of an organization. Using these accounts may allow the adversary to evade detection, as the original account user will not be present to identify any anomalous activity taking place on their account."
   },
   {
     "source": "Valid-Accounts.txt",
     "chunk_index": 3,
-    "text": "In some cases, adversaries may abuse inactive accounts: for example, those belonging to individuals who are no longer part of an organization. Using these accounts may allow the adversary to evade detection, as the original account user will not be present to identify any anomalous activity taking place on their account.[2]"
+    "text": "The overlap of permissions for local, domain, and cloud accounts across a network of systems is of concern because the adversary may be able to pivot across accounts and systems to reach a high level of access (i.e., domain or enterprise administrator) to bypass access controls set within the enterprise."
   },
   {
     "source": "Valid-Accounts.txt",
     "chunk_index": 4,
-    "text": "The overlap of permissions for local, domain, and cloud accounts across a network of systems is of concern because the adversary may be able to pivot across accounts and systems to reach a high level of access (i.e., domain or enterprise administrator) to bypass access controls set within the enterprise.[3]"
+    "text": "ID: \u24d8\nTactics: Stealth, Persistence, Privilege Escalation, Initial Access\n\u24d8\nPlatforms: Containers, ESXi, IaaS, Identity Provider, Linux, Network Devices, Office Suite, SaaS, Windows, macOS\nContributors: Jon Sternstein, Stern Security; Mark Wee; Menachem Goldstein; Netskope; Praetorian; Prasad Somasamudram, McAfee; Sekhar Sarukkai, McAfee; Syed Ummar Farooqh, McAfee; Yossi Weizman, Azure Defender Research Team\nVersion: 3.0\nCreated: 31 May 2017\nLast Modified: 12 May 2026\nVersion Permalink\nProcedur"
   },
   {
     "source": "Valid-Accounts.txt",
     "chunk_index": 5,
-    "text": "ID: T1078\nSub-techniques:  T1078.001, T1078.002, T1078.003, T1078.004\n\u24d8\nTactics: Stealth, Persistence, Privilege Escalation, Initial Access\n\u24d8\nPlatforms: Containers, ESXi, IaaS, Identity Provider, Linux, Network Devices, Office Suite, SaaS, Windows, macOS\nContributors: Jon Sternstein, Stern Security; Mark Wee; Menachem Goldstein; Netskope; Praetorian; Prasad Somasamudram, McAfee; Sekhar Sarukkai, McAfee; Syed Ummar Farooqh, McAfee; Yossi Weizman, Azure Defender Research Team\nVersion: 3.0\nCreated:"
+    "text": "esearch Team\nVersion: 3.0\nCreated: 31 May 2017\nLast Modified: 12 May 2026\nVersion Permalink\nProcedure Examples\nID\tName\tDescription\nC0028\t2015 Ukraine Electric Power Attack\t\nDuring the 2015 Ukraine Electric Power Attack, Sandworm Team used valid accounts on the corporate network to escalate privileges, move laterally, and establish persistence within the corporate network."
   },
   {
     "source": "Valid-Accounts.txt",
     "chunk_index": 6,
-    "text": "cAfee; Syed Ummar Farooqh, McAfee; Yossi Weizman, Azure Defender Research Team\nVersion: 3.0\nCreated: 31 May 2017\nLast Modified: 12 May 2026\nVersion Permalink\nProcedure Examples\nID\tName\tDescription\nC0028\t2015 Ukraine Electric Power Attack\t\nDuring the 2015 Ukraine Electric Power Attack, Sandworm Team used valid accounts on the corporate network to escalate privileges, move laterally, and establish persistence within the corporate network. [4]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 7,
-    "text": "ersistence within the corporate network. [4]"
+    "text": "C0057\t3CX Supply Chain Attack\t\nDuring 3CX Supply Chain Attack, AppleJeus has gained access to the 3CX corporate environment through legitimate VPN credentials."
   },
   {
     "source": "Valid-Accounts.txt",
     "chunk_index": 8,
-    "text": "C0057\t3CX Supply Chain Attack\t\nDuring 3CX Supply Chain Attack, AppleJeus has gained access to the 3CX corporate environment through legitimate VPN credentials.[5]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 9,
-    "text": "G1024\tAkira\t\nAkira uses valid account information to remotely access victim networks, such as VPN credentials.[6][7][8]"
+    "text": "C0062\tAnthropic AI-orchestrated Campaign\t\nDuring the Anthropic AI-orchestrated Campaign, the adversary used harvested credentials to authenticate against internal APIs, database systems, container registries, and logging infrastructure across targeted networks."
   },
   {
     "source": "Valid-Accounts.txt",
     "chunk_index": 10,
-    "text": "C0062\tAnthropic AI-orchestrated Campaign\t\nDuring the Anthropic AI-orchestrated Campaign, the adversary used harvested credentials to authenticate against internal APIs, database systems, container registries, and logging infrastructure across targeted networks.[9]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 11,
-    "text": "G0026\tAPT18\t\nAPT18 actors leverage legitimate credentials to log into external remote services.[10]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 12,
-    "text": "G0007\tAPT28\t\nAPT28 has used legitimate credentials to gain initial access, maintain access, and exfiltrate data from a victim network. The group has specifically used credentials stolen through a spearphishing email to login to the DCCC network. The group has also leveraged default manufacturer's passwords to gain initial access to corporate networks via IoT devices such as a VOIP phone, printer, and video decoder.[11][12][13][14]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 13,
-    "text": "G0016\tAPT29\t\nAPT29 has used a compromised account to access an organization's VPN infrastructure.[15]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 14,
-    "text": "G0064\tAPT33\t\nAPT33 has used valid accounts for initial access and privilege escalation.[16][17]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 15,
-    "text": "G0087\tAPT39\t\nAPT39 has used stolen credentials to compromise Outlook Web Access (OWA).[18]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 16,
-    "text": "G0096\tAPT41\t\nAPT41 used compromised credentials to log on to other systems.[19][20]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 17,
-    "text": "G0001\tAxiom\t\nAxiom has used previously compromised administrative accounts to escalate privileges.[21]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 18,
-    "text": "G1043\tBlackByte\t\nBlackByte has gained access to victim environments through legitimate VPN credentials.[22]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 19,
-    "text": "C0032\tC0032\t\nDuring the C0032 campaign, TEMP.Veles used compromised VPN accounts.[23]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 20,
-    "text": "G0008\tCarbanak\t\nCarbanak actors used legitimate credentials of banking employees to perform operations that sent them millions of dollars.[24]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 21,
-    "text": "G0114\tChimera\t\nChimera has used a valid account to maintain persistence via scheduled task.[25]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 22,
-    "text": "G1021\tCinnamon Tempest\t\nCinnamon Tempest has used compromised user accounts to deploy payloads and create system services.[26]"
+    "text": "APT28 has used legitimate credentials to gain initial access, maintain access, and exfiltrate data from a victim network. The group has specifically used credentials stolen through a spearphishing email to login to the DCCC network. The group has also leveraged default manufacturer's passwords to gain initial access to corporate networks via IoT devices such as a VOIP phone, printer, and video decoder."
   },
   {
     "source": "Valid-Accounts.txt",
     "chunk_index": 23,
-    "text": "G0035\tDragonfly\t\nDragonfly has compromised user credentials and used valid accounts for operations.[27][28][29]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 24,
-    "text": "S0567\tDtrack\t\nDtrack used hard-coded credentials to gain access to a network share.[30]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 25,
-    "text": "S0038\tDuqu\t\nAdversaries can instruct Duqu to spread laterally by copying itself to shares it has enumerated and for which it has obtained legitimate credentials (via keylogging or other means). The remote host is then infected by using the compromised credentials to schedule a task on remote machines that executes the malware.[31]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 26,
-    "text": "G0051\tFIN10\t\nFIN10 has used stolen credentials to connect remotely to victim networks using VPNs protected with only a single factor.[32]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 27,
-    "text": "G0085\tFIN4\t\nFIN4 has used legitimate credentials to hijack email communications.[33][34]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 28,
-    "text": "G0053\tFIN5\t\nFIN5 has used legitimate VPN, RDP, Citrix, or VNC credentials to maintain access to a victim environment.[35][36][37]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 29,
-    "text": "G0037\tFIN6\t\nTo move laterally on a victim network, FIN6 has used credentials stolen from various systems on which it gathered usernames and password hashes.[38][39][40]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 30,
-    "text": "G0046\tFIN7\t\nFIN7 has harvested valid administrative credentials for lateral movement.[41]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 31,
-    "text": "G0061\tFIN8\t\nFIN8 has used valid accounts for persistence and lateral movement.[42]"
+    "text": "Adversaries can instruct Duqu to spread laterally by copying itself to shares it has enumerated and for which it has obtained legitimate credentials (via keylogging or other means). The remote host is then infected by using the compromised credentials to schedule a task on remote machines that executes the malware."
   },
   {
     "source": "Valid-Accounts.txt",
     "chunk_index": 32,
-    "text": "G0117\tFox Kitten\t\nFox Kitten has used valid credentials with various services during lateral movement.[43]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 33,
-    "text": "G0093\tGALLIUM\t\nGALLIUM leveraged valid accounts to maintain access to a victim network.[44]"
+    "text": "C0038\tHomeLand Justice\t\nDuring HomeLand Justice, threat actors used a compromised Exchange account to search mailboxes and create new Exchange accounts."
   },
   {
     "source": "Valid-Accounts.txt",
     "chunk_index": 34,
-    "text": "C0038\tHomeLand Justice\t\nDuring HomeLand Justice, threat actors used a compromised Exchange account to search mailboxes and create new Exchange accounts.[45]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 35,
-    "text": "G1032\tINC Ransom\t\nINC Ransom has used compromised valid accounts for access to victim environments.[46][47][48][49]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 36,
-    "text": "G0119\tIndrik Spider\t\nIndrik Spider has used valid accounts for initial access and lateral movement.[50] Indrik Spider has also maintained access to the victim environment through the VPN infrastructure.[50]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 37,
-    "text": "S0604\tIndustroyer\t\nIndustroyer can use supplied user credentials to execute processes and stop services.[51]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 38,
-    "text": "G0004\tKe3chang\t\nKe3chang has used credential dumpers or stealers to obtain legitimate credentials, which they used to gain access to victim accounts.[52]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 39,
-    "text": "S0599\tKinsing\t\nKinsing has used valid SSH credentials to access remote hosts.[53]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 40,
-    "text": "G1004\tLAPSUS$\t\nLAPSUS$ has used compromised credentials and/or session tokens to gain access into a victim's VPN, VDI, RDP, and IAMs.[54][55]"
+    "text": "Indrik Spider has used valid accounts for initial access and lateral movement. Indrik Spider has also maintained access to the victim environment through the VPN infrastructure."
   },
   {
     "source": "Valid-Accounts.txt",
     "chunk_index": 41,
-    "text": "G0032\tLazarus Group\t\nLazarus Group has used administrator credentials to gain access to restricted network segments.[56]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 42,
-    "text": "G0065\tLeviathan\t\nLeviathan has obtained valid accounts to gain initial access.[57][58][59]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 43,
-    "text": "C0049\tLeviathan Australian Intrusions\t\nLeviathan used captured, valid account information to log into victim web applications and appliances during Leviathan Australian Intrusions.[59]"
+    "text": "C0049\tLeviathan Australian Intrusions\t\nLeviathan used captured, valid account information to log into victim web applications and appliances during Leviathan Australian Intrusions."
   },
   {
     "source": "Valid-Accounts.txt",
     "chunk_index": 44,
-    "text": "S0362\tLinux Rabbit\t\nLinux Rabbit acquires valid SSH accounts through brute force. [60]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 45,
-    "text": "S9036\tLP-Notes\t\nLP-Notes has used stolen Windows credentials to log in as the users.[61]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 46,
-    "text": "G1051\tMedusa Group\t\nMedusa Group has utilized compromised legitimate local and domain accounts within the victim environment to facilitate remote access and lateral movement sometimes in combination with PsExec.[62]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 47,
-    "text": "G0045\tmenuPass\t\nmenuPass has used valid accounts including shared between Managed Service Providers and clients to move between the two environments.[63][64][65][66]"
+    "text": "Medusa Group has utilized compromised legitimate local and domain accounts within the victim environment to facilitate remote access and lateral movement sometimes in combination with PsExec."
   },
   {
     "source": "Valid-Accounts.txt",
     "chunk_index": 48,
-    "text": "C0002\tNight Dragon\t\nDuring Night Dragon, threat actors used compromised VPN accounts to gain access to victim systems.[67]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 49,
-    "text": "G0049\tOilRig\t\nOilRig has used compromised credentials to access other systems on a victim network.[68][69][20][70]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 50,
-    "text": "C0048\tOperation MidnightEclipse\t\nDuring Operation MidnightEclipse, threat actors extracted sensitive credentials while moving laterally through compromised networks.[71]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 51,
-    "text": "C0014\tOperation Wocao\t\nDuring Operation Wocao, threat actors used valid VPN credentials to gain initial access.[72]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 52,
-    "text": "G0011\tPittyTiger\t\nPittyTiger attempts to obtain legitimate credentials during operations.[73]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 53,
-    "text": "G1040\tPlay\t\nPlay has used valid VPN accounts to achieve initial access.[74]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 54,
-    "text": "G1005\tPOLONIUM\t\nPOLONIUM has used valid compromised credentials to gain access to victim environments.[75]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 55,
-    "text": "C0056\tRedPenguin\t\nDuring RedPenguin, UNC3886 used legitimate credentials to gain priviliged access to Juniper routers.[76][77]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 56,
-    "text": "G0034\tSandworm Team\t\nSandworm Team have used previously acquired legitimate credentials prior to attacks.[78]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 57,
-    "text": "G1015\tScattered Spider\t\nScattered Spider has used compromised credentials for initial access.[79][80]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 58,
-    "text": "G1041\tSea Turtle\t\nSea Turtle used compromised credentials to maintain long-term access to victim environments.[81]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 59,
-    "text": "S0053\tSeaDuke\t\nSome SeaDuke samples have a module to extract email from Microsoft Exchange servers using compromised credentials.[82]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 60,
-    "text": "G0091\tSilence\t\nSilence has used compromised credentials to log on to other systems and escalate privileges.[83]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 61,
-    "text": "G0122\tSilent Librarian\t\nSilent Librarian has used compromised credentials to obtain unauthorized access to online accounts.[84]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 62,
-    "text": "C0024\tSolarWinds Compromise\t\nDuring the SolarWinds Compromise, APT29 used different compromised credentials for remote access and to move laterally.[85][86][87]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 63,
-    "text": "G1033\tStar Blizzard\t\nStar Blizzard has used stolen credentials to sign into victim email accounts.[88][89]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 64,
-    "text": "G0039\tSuckfly\t\nSuckfly used legitimate account credentials that they dumped to navigate the internal victim network as though they were the legitimate account owner.[90]"
+    "text": "C0048\tOperation MidnightEclipse\t\nDuring Operation MidnightEclipse, threat actors extracted sensitive credentials while moving laterally through compromised networks."
   },
   {
     "source": "Valid-Accounts.txt",
     "chunk_index": 65,
-    "text": "G0027\tThreat Group-3390\t\nThreat Group-3390 actors obtain legitimate credentials using a variety of methods and use them to further lateral movement on victim networks.[91]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 66,
-    "text": "G1048\tUNC3886\t\nUNC3886 has used tools to hijack valid SSH accounts.[92]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 67,
-    "text": "G1055\tVOID MANTICORE\t\nVOID MANTICORE has leveraged valid accounts to log into VPN infrastructure.[93] VOID MANTICORE has used compromised valid credentials to gain access to management infrastructure and enterprise control systems.[94] VOID MANTICORE has also validated and tested authentication using compromised credentials prior to malicious actions.[93]"
+    "text": "VOID MANTICORE has leveraged valid accounts to log into VPN infrastructure. VOID MANTICORE has used compromised valid credentials to gain access to management infrastructure and enterprise control systems. VOID MANTICORE has also validated and tested authentication using compromised credentials prior to malicious actions."
   },
   {
     "source": "Valid-Accounts.txt",
     "chunk_index": 68,
-    "text": "G1017\tVolt Typhoon\t\nVolt Typhoon relies primarily on valid credentials for persistence.[95]"
+    "text": "Mitigations\nID\tMitigation\tDescription\nM1036\tAccount Use Policies\t\nUse conditional access policies to block logins from non-compliant devices or from outside defined organization IP ranges."
   },
   {
     "source": "Valid-Accounts.txt",
     "chunk_index": 69,
-    "text": "G0102\tWizard Spider\t\nWizard Spider has used valid credentials for privileged accounts with the goal of accessing domain controllers.[96][97]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 70,
-    "text": "Mitigations\nID\tMitigation\tDescription\nM1036\tAccount Use Policies\t\nUse conditional access policies to block logins from non-compliant devices or from outside defined organization IP ranges.[98]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 71,
     "text": "M1015\tActive Directory Configuration\t\nDisable legacy authentication, which does not support MFA, and require the use of modern authentication protocols instead."
   },
   {
     "source": "Valid-Accounts.txt",
-    "chunk_index": 72,
+    "chunk_index": 70,
     "text": "M1013\tApplication Developer Guidance\t\nEnsure that applications do not store sensitive data or credentials insecurely. (e.g. plaintext credentials in code, published credentials in repositories, or credentials in public cloud storage)."
   },
   {
     "source": "Valid-Accounts.txt",
-    "chunk_index": 73,
+    "chunk_index": 71,
     "text": "M1032\tMulti-factor Authentication\t\nImplement multi-factor authentication (MFA) across all account types, including default, local, domain, and cloud accounts, to prevent unauthorized access, even if credentials are compromised. MFA provides a critical layer of security by requiring multiple forms of verification beyond just a password. This measure significantly reduces the risk of adversaries abusing valid accounts to gain initial access, escalate privileges, maintain persistence, or evade defe"
   },
   {
     "source": "Valid-Accounts.txt",
+    "chunk_index": 73,
+    "text": "M1027\tPassword Policies\t\nApplications and appliances that utilize default username and password should be changed immediately after the installation, and before deployment to a production environment. When possible, applications that use SSH keys should be updated periodically and properly secured."
+  },
+  {
+    "source": "Valid-Accounts.txt",
     "chunk_index": 74,
-    "text": "sing valid accounts to gain initial access, escalate privileges, maintain persistence, or evade defenses within your network."
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 75,
-    "text": "M1027\tPassword Policies\t\nApplications and appliances that utilize default username and password should be changed immediately after the installation, and before deployment to a production environment.[99] When possible, applications that use SSH keys should be updated periodically and properly secured."
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 76,
     "text": "Policies should minimize (if not eliminate) reuse of passwords between different user accounts, especially employees using the same credentials for personal accounts that may not be defended by enterprise security resources."
   },
   {
     "source": "Valid-Accounts.txt",
-    "chunk_index": 77,
-    "text": "M1026\tPrivileged Account Management\t\nAudit domain and local accounts as well as their permission levels routinely to look for situations that could allow an adversary to gain wide access by obtaining credentials of a privileged account. [3] [100] These audits should also include if default accounts have been enabled, or if new local accounts are created that have not been authorized. Follow best practices for design and administration of an enterprise network to limit privileged account use acro"
+    "chunk_index": 75,
+    "text": "M1026\tPrivileged Account Management\t\nAudit domain and local accounts as well as their permission levels routinely to look for situations that could allow an adversary to gain wide access by obtaining credentials of a privileged account.   These audits should also include if default accounts have been enabled, or if new local accounts are created that have not been authorized. Follow best practices for design and administration of an enterprise network to limit privileged account use across admin"
   },
   {
     "source": "Valid-Accounts.txt",
     "chunk_index": 78,
-    "text": "ractices for design and administration of an enterprise network to limit privileged account use across administrative tiers. [101]"
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 79,
-    "text": "M1018\tUser Account Management\t\nRegularly audit user accounts for activity and deactivate or remove any that are no longer needed."
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 80,
     "text": "M1017\tUser Training\t\nApplications may send push notifications to verify a login as a form of multi-factor authentication (MFA). Train users to only accept valid push notifications and to report suspicious push notifications."
   },
   {
     "source": "Valid-Accounts.txt",
-    "chunk_index": 81,
-    "text": "Detection Strategy\nID\tName\tAnalytic ID\tAnalytic Description\nDET0560\tDetection of Valid Account Abuse Across Platforms\tAN1543\t\nDetection of compromised or misused valid accounts via anomalous logon patterns, abnormal logon types, and inconsistent geographic or time-based activity across Windows endpoints."
+    "chunk_index": 79,
+    "text": "Detection Strategy\nID\tName\tAnalytic ID\tAnalytic Description\nDEDetection of compromised or misused valid accounts via anomalous logon patterns, abnormal logon types, and inconsistent geographic or time-based activity across Windows endpoints."
   },
   {
     "source": "Valid-Accounts.txt",
     "chunk_index": 82,
-    "text": "AN1544\t\nDetection of valid account misuse through SSH logins, sudo/su abuse, and service account anomalies outside expected patterns."
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 83,
-    "text": "AN1545\t\nDetection of interactive and remote logins by service accounts or users at unusual times, with unexpected child process activity."
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 84,
     "text": "AN1546\t\nDetection of valid account abuse in IdP logs via geographic anomalies, impossible travel, risky sign-ins, and multiple MFA attempts or failures."
-  },
-  {
-    "source": "Valid-Accounts.txt",
-    "chunk_index": 85,
-    "text": "AN1547\t\nDetection of containerized service accounts or compromised kubeconfigs being used for cluster access from unexpected nodes or IPs."
   }
 ]
