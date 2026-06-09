@@ -1,6 +1,9 @@
 # API keys — never commit these
 .env
 
+# Virtual environment
+.venv
+
 # Python
 __pycache__/
 *.py[cod]

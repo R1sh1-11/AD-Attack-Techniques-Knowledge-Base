@@ -1,0 +1,76 @@
+Permission Groups Discovery
+Sub-techniques (3)
+ID	Name
+T1069.001	Local Groups
+T1069.002	Domain Groups
+T1069.003	Cloud Groups
+Adversaries may attempt to discover group and permission settings. This information can help adversaries determine which user accounts and groups are available, the membership of users in particular groups, and which users and groups have elevated permissions.
+
+Adversaries may attempt to discover group permission settings in many different ways. This data may provide the adversary with information about the compromised environment that can be used in follow-on activity and targeting.[1]
+
+ID: T1069
+Sub-techniques:  T1069.001, T1069.002, T1069.003
+ⓘ
+Tactic: Discovery
+ⓘ
+Platforms: Containers, IaaS, Identity Provider, Linux, Office Suite, SaaS, Windows, macOS
+Contributors: Daniel Prizmant, Palo Alto Networks; Microsoft Threat Intelligence Center (MSTIC); Yuval Avrahami, Palo Alto Networks
+Version: 2.6
+Created: 31 May 2017
+Last Modified: 24 October 2025
+Version Permalink
+Procedure Examples
+ID	Name	Description
+G0022	APT3	
+APT3 has a tool that can enumerate the permissions associated with Windows groups.[2]
+
+G0096	APT41	
+APT41 used net group commands to enumerate various Windows user groups and permissions.[3]
+
+S0335	Carbon	
+Carbon uses the net group command.[4]
+
+G1016	FIN13	
+FIN13 has enumerated all users and roles from a victim's main treasury system.[5]
+
+S0483	IcedID	
+IcedID has the ability to identify Workgroup membership.[6]
+
+S0233	MURKYTOP	
+MURKYTOP has the capability to retrieve information about groups.[7]
+
+G1015	Scattered Spider	
+Scattered Spider has enumerated the vSphere Admins and ESX Admins groups in targeted environments.[8]
+
+S0445	ShimRatReporter	
+ShimRatReporter gathered the local privileges for the infected host.[9]
+
+S0623	Siloscape	
+Siloscape checks for Kubernetes node permissions.[10]
+
+C0024	SolarWinds Compromise	
+During the SolarWinds Compromise, APT29 used the Get-ManagementRoleAssignment PowerShell cmdlet to enumerate Exchange management role assignments through an Exchange Management Shell.[11]
+
+G0092	TA505	
+TA505 has used TinyMet to enumerate members of privileged groups.[12] TA505 has also run net group /domain.[13]
+
+S0266	TrickBot	
+TrickBot can identify the groups the user on a compromised host belongs to.[14]
+
+G1017	Volt Typhoon	
+Volt Typhoon has used commercial tools, LOTL utilities, and appliances already present on the system for group and user discovery.[15]
+
+Mitigations
+This type of attack technique cannot be easily mitigated with preventive controls since it is based on the abuse of system features.
+
+Detection Strategy
+ID	Name	Analytic ID	Analytic Description
+DET0179	Behavioral Detection of Permission Groups Discovery	AN0507	
+Detection of adversary enumeration of domain or local group memberships via native tools such as net.exe, PowerShell, or WMI. This activity may precede lateral movement or privilege escalation.
+
+AN0508	
+Detection of group enumeration using commands like 'id', 'groups', or 'getent group', often followed by privilege escalation or SSH lateral movement.
+
+AN0509	
+Group membership checks via 'dscl', 'dscacheutil', or 'id', typically executed via terminal or automation scripts.
+

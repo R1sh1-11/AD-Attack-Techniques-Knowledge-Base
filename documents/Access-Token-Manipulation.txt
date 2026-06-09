@@ -1,0 +1,110 @@
+Access Token Manipulation
+Sub-techniques (5)
+ID	Name
+T1134.001	Token Impersonation/Theft
+T1134.002	Create Process with Token
+T1134.003	Make and Impersonate Token
+T1134.004	Parent PID Spoofing
+T1134.005	SID-History Injection
+Adversaries may modify access tokens to operate under a different user or system security context to perform actions and bypass access controls. Windows uses access tokens to determine the ownership of a running process. A user can manipulate access tokens to make a running process appear as though it is the child of a different process or belongs to someone other than the user that started the process. When this occurs, the process also takes on the security context associated with the new token.
+
+An adversary can use built-in Windows API functions to copy access tokens from existing processes; this is known as token stealing. These token can then be applied to an existing process (i.e. Token Impersonation/Theft) or used to spawn a new process (i.e. Create Process with Token). An adversary must already be in a privileged user context (i.e. administrator) to steal a token. However, adversaries commonly use token stealing to elevate their security context from the administrator level to the SYSTEM level. An adversary can then use a token to authenticate to a remote system as the account for that token if the account has appropriate permissions on the remote system.[1]
+
+Any standard user can use the runas command, and the Windows API functions, to create impersonation tokens; it does not require access to an administrator account. There are also other mechanisms, such as Active Directory fields, that can be used to modify access tokens.
+
+ID: T1134
+Sub-techniques:  T1134.001, T1134.002, T1134.003, T1134.004, T1134.005
+ⓘ
+Tactics: Stealth, Privilege Escalation
+ⓘ
+Platforms: Windows
+Contributors: Jared Atkinson, @jaredcatkinson; Robby Winchester, @robwinchester3; Tom Ueltschi @c_APT_ure; Travis Smith, Tripwire
+Version: 3.0
+Created: 14 December 2017
+Last Modified: 12 May 2026
+Version Permalink
+Procedure Examples
+ID	Name	Description
+S0622	AppleSeed	
+AppleSeed can gain system level privilege by passing SeDebugPrivilege to the AdjustTokenPrivilege API.[2]
+
+S1068	BlackCat	
+BlackCat has the ability modify access tokens.[3][4]
+
+G0108	Blue Mockingbird	
+Blue Mockingbird has used JuicyPotato to abuse the SeImpersonate token privilege to escalate from web application pool accounts to NT Authority\SYSTEM.[5]
+
+C0017	C0017	
+During C0017, APT41 used a ConfuserEx obfuscated BADPOTATO exploit to abuse named-pipe impersonation for local NT AUTHORITY\SYSTEM privilege escalation.[6]
+
+S0625	Cuba	
+Cuba has used SeDebugPrivilege and AdjustTokenPrivileges to elevate privileges.[7]
+
+S0038	Duqu	
+Duqu examines running system processes for tokens that have specific system privileges. If it finds one, it will copy the token and store it for later use. Eventually it will start new processes with the stored token attached. It can also steal tokens to acquire administrative privileges.[8]
+
+S0363	Empire	
+Empire can use PowerSploit's Invoke-TokenManipulation to manipulate access tokens.[9]
+
+G0037	FIN6	
+FIN6 has used has used Metasploit’s named-pipe impersonation technique to escalate privileges.[10]
+
+S0666	Gelsemium	
+Gelsemium can use token manipulation to bypass UAC on Windows7 systems.[11]
+
+S0697	HermeticWiper	
+HermeticWiper can use AdjustTokenPrivileges to grant itself privileges for debugging with SeDebugPrivilege, creating backups with SeBackupPrivilege, loading drivers with SeLoadDriverPrivilege, and shutting down a local system with SeShutdownPrivilege.[12][13]
+
+S0203	Hydraq	
+Hydraq creates a backdoor through which remote attackers can adjust token privileges.[14]
+
+S0607	KillDisk	
+KillDisk has attempted to get the access token of a process by calling OpenProcessToken. If KillDisk gets the access token, then it attempt to modify the token privileges with AdjustTokenPrivileges.[15]
+
+G0030	Lotus Blossom	
+Lotus Blossom has retrieved process tokens for processes to adjust the privileges of the launch process or other items.[16]
+
+S1060	Mafalda	
+Mafalda can use AdjustTokenPrivileges() to elevate privileges.[17]
+
+S0576	MegaCortex	
+MegaCortex can enable SeDebugPrivilege and adjust token privileges.[18]
+
+S0378	PoshC2	
+PoshC2 can use Invoke-TokenManipulation for manipulating tokens.[19]
+
+S0194	PowerSploit	
+PowerSploit's Invoke-TokenManipulation Exfiltration module can be used to manipulate tokens.[20][21]
+
+S1242	Qilin	
+Qilin can use an embedded Mimikatz module for token manipulation.[22]
+
+S0446	Ryuk	
+Ryuk has attempted to adjust its token privileges to have the SeDebugPrivilege.[23]
+
+S1210	Sagerunex	
+Sagerunex finds the explorer.exe process after execution and uses it to change the token of its executing thread.[24]
+
+S0633	Sliver	
+Sliver has the ability to manipulate user tokens on targeted Windows systems.[25][26]
+
+S0058	SslMM	
+SslMM contains a feature to manipulate process privileges and tokens.[27]
+
+S0562	SUNSPOT	
+SUNSPOT modified its security token to grants itself debugging privileges by adding SeDebugPrivilege.[28]
+
+Mitigations
+ID	Mitigation	Description
+M1026	Privileged Account Management	
+Limit permissions so that users and user groups cannot create tokens. This setting should be defined for the local system account only. GPO: Computer Configuration > [Policies] > Windows Settings > Security Settings > Local Policies > User Rights Assignment: Create a token object. [29] Also define who can create a process level token to only the local and network service through GPO: Computer Configuration > [Policies] > Windows Settings > Security Settings > Local Policies > User Rights Assignment: Replace a process level token.[30]
+
+Administrators should log in as a standard user but run their tools with administrator privileges using the built-in access token manipulation command runas.[31]
+
+M1018	User Account Management	
+An adversary must already have administrator level access on the local system to make full use of this technique; be sure to restrict users and accounts to the least privileges they require.
+
+Detection Strategy
+ID	Name	Analytic ID	Analytic Description
+DET0283	Behavior-chain detection for T1134 Access Token Manipulation on Windows	AN0786	
+Detection of suspicious token manipulation chains: use of token-related APIs (e.g., LogonUser, DuplicateTokenEx) or commands (runas) → spawning of a new process under a different security context (e.g., SYSTEM) → mismatched parent-child process lineage or anomalies in Event Tracing for Windows (ETW) token/PPID data → abnormal lateral or privilege escalation activity.

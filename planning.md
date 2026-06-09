@@ -1,122 +1,104 @@
 # Project 1 Planning: The Unofficial Guide
 
-> Write this document before you write any pipeline code.
-> Your spec and architecture diagram are what you'll use to direct AI tools (Claude, Copilot, etc.) to generate your implementation — the more specific they are, the more useful the generated code will be.
-> Update the Retrieval Approach and Chunking Strategy sections if you change your approach during implementation.
-> Update this file before starting any stretch features.
-
 ---
 
 ## Domain
 
-<!-- What domain did you choose? Why is this knowledge valuable and hard to find through official channels? -->
+This project builds a RAG system over Active Directory attack and defense knowledge drawn from MITRE ATT&CK and CISA advisories. This knowledge exists across dozens of scattered technical pages — security practitioners waste time cross-referencing multiple sources to answer questions like "how is this attack detected?" or "what mitigations exist?" A searchable, grounded Q&A system makes this operationally useful.
 
 ---
 
 ## Documents
 
-<!-- List your specific sources: URLs, subreddit names, forum threads, or file descriptions.
-     Aim for at least 10 sources that together cover different subtopics or perspectives within your domain. -->
-
 | # | Source | Description | URL or location |
 |---|--------|-------------|-----------------|
-| 1 | | | |
-| 2 | | | |
-| 3 | | | |
-| 4 | | | |
-| 5 | | | |
-| 6 | | | |
-| 7 | | | |
-| 8 | | | |
-| 9 | | | |
-| 10 | | | |
+| 1 | MITRE ATT&CK | Kerberoasting (T1558.003) | https://attack.mitre.org/techniques/T1558/003/ |
+| 2 | MITRE ATT&CK | AS-REP Roasting (T1558.004) | https://attack.mitre.org/techniques/T1558/004/ |
+| 3 | MITRE ATT&CK | Pass-the-Hash (T1550.002) | https://attack.mitre.org/techniques/T1550/002/ |
+| 4 | MITRE ATT&CK | Password Spraying (T1110.003) | https://attack.mitre.org/techniques/T1110/003/ |
+| 5 | MITRE ATT&CK | Permission Groups Discovery (T1069) | https://attack.mitre.org/techniques/T1069/ |
+| 6 | MITRE ATT&CK | Valid Accounts (T1078) | https://attack.mitre.org/techniques/T1078/ |
+| 7 | MITRE ATT&CK | OS Credential Dumping (T1003) | https://attack.mitre.org/techniques/T1003/ |
+| 8 | MITRE ATT&CK | Access Token Manipulation (T1134) | https://attack.mitre.org/techniques/T1134/ |
+| 9 | MITRE ATT&CK | Account Discovery (T1087) | https://attack.mitre.org/techniques/T1087/ |
+| 10 | CISA | AD Security Advisory (AA21-008a) | https://www.cisa.gov/news-events/cybersecurity-advisories/aa21-008a |
 
 ---
 
 ## Chunking Strategy
 
-<!-- How will you split documents into chunks?
-     State your chunk size (in tokens or characters), overlap size, and explain why those
-     numbers fit the structure of your documents.
-     A review-heavy corpus warrants different chunking than a long FAQ. -->
+**Chunk size:** 500 characters
 
-**Chunk size:**
+**Overlap:** 100 characters
 
-**Overlap:**
-
-**Reasoning:**
+**Reasoning:** MITRE pages are structured into discrete sections (description, procedure examples, mitigations, detections). Paragraph-based splitting is used first to respect those boundaries, then fixed-size chunking (500 chars) is applied within paragraphs that are too long. 100-character overlap ensures that information spanning a chunk boundary — like a mitigation technique that references the attack described just before it — isn't lost. 500 characters is large enough to carry semantic meaning per chunk but small enough that retrieval stays precise.
 
 ---
 
 ## Retrieval Approach
 
-<!-- Which embedding model are you using (e.g., all-MiniLM-L6-v2 via sentence-transformers)?
-     How many chunks will you retrieve per query (top-k)?
-     If you were deploying this for real users and cost wasn't a constraint, what tradeoffs
-     would you weigh in choosing a different embedding model — context length, multilingual
-     support, accuracy on domain-specific text, latency? -->
+**Embedding model:** all-MiniLM-L6-v2 via sentence-transformers (runs locally, no API key)
 
-**Embedding model:**
+**Top-k:** 5
 
-**Top-k:**
-
-**Production tradeoff reflection:**
+**Production tradeoff reflection:** For a production deployment I'd evaluate text-embedding-3-small (OpenAI) for higher accuracy on technical security text, but it adds API cost and latency. For a multilingual deployment covering non-English threat intel, a multilingual-e5 model would be worth the tradeoff. all-MiniLM-L6-v2 is the right call here — free, fast, and the domain is English-only.
 
 ---
 
 ## Evaluation Plan
 
-<!-- List your 5 test questions with their expected correct answers.
-     Questions should be specific enough that you can judge whether the system's response
-     is right or wrong. "What are good dining halls?" is too vague.
-     "What do students say about wait times at [dining hall name] during lunch?" is testable. -->
-
 | # | Question | Expected answer |
 |---|----------|-----------------|
-| 1 | | |
-| 2 | | |
-| 3 | | |
-| 4 | | |
-| 5 | | |
+| 1 | How does Kerberoasting work? | Attackers request service tickets for SPNs and crack them offline to recover plaintext credentials |
+| 2 | What mitigations exist for AS-REP Roasting? | Require Kerberos pre-authentication for all accounts; use strong passwords on accounts that must have it disabled |
+| 3 | How is Pass-the-Hash detected? | Monitor for logon events using NTLM where credentials don't match the source host; Event ID 4624 logon type 3 |
+| 4 | What is Password Spraying and how does it differ from brute force? | Password spraying tries one password across many accounts to avoid lockouts; brute force tries many passwords on one account |
+| 5 | What does OS credential dumping involve? | Extracting credential material from LSASS memory, SAM database, or NTDS.dit using tools like Mimikatz |
 
 ---
 
 ## Anticipated Challenges
 
-<!-- What could go wrong? Name at least two specific risks with reasoning.
-     Consider: noisy or inconsistent documents, missing source attribution, off-topic
-     retrieval, chunks that split key information across boundaries. -->
+1. **Chunk boundary splitting mitigations from detections** — MITRE pages list mitigations and detections in separate sections, but if a chunk ends mid-mitigation, retrieval may return an incomplete answer. Paragraph-based splitting should reduce this but won't eliminate it entirely.
 
-1.
-
-2.
+2. **Short procedure example chunks carrying no semantic signal** — Some MITRE procedure examples are one sentence referencing a specific APT group. These chunks may match queries on keyword overlap but provide no actionable answer, diluting retrieval quality.
 
 ---
 
 ## Architecture
-
-<!-- Draw a diagram of your pipeline showing the five stages:
-     Document Ingestion → Chunking → Embedding + Vector Store → Retrieval → Generation
-     Label each stage with the tool or library you're using.
-     You can use ASCII art, a Mermaid diagram, or embed a sketch as an image.
-     You'll use this diagram as context when prompting AI tools to implement each stage. -->
+documents/
+*.txt, *.pdf
+|
+v
+[Ingestion] — Python, pdfplumber for PDFs
+|
+v
+[Chunking] — paragraph split → fixed 500-char chunks, 100-char overlap
+|
+v
+[Embedding] — sentence-transformers (all-MiniLM-L6-v2)
+|
+v
+[Vector Store] — ChromaDB (local), metadata: source filename + chunk index
+|
+v
+[Retrieval] — top-5 semantic search
+|
+v
+[Generation] — Groq (llama-3.3-70b-versatile), grounded prompt, source attribution
+|
+v
+[Interface] — Gradio web UI
 
 ---
 
 ## AI Tool Plan
 
-<!-- For each part of the pipeline below, describe:
-     - Which AI tool you plan to use (Claude, Copilot, ChatGPT, etc.)
-     - What you'll give it as input (which sections of this planning.md, which requirements)
-     - What you expect it to produce
-     - How you'll verify the output matches your spec
-
-     "I'll use AI to help me code" is not a plan.
-     "I'll give Claude my Chunking Strategy section and ask it to implement chunk_text()
-     with my specified chunk size and overlap" is a plan. -->
-
 **Milestone 3 — Ingestion and chunking:**
+Give Claude the Documents section (file types: .txt and .pdf) and the Chunking Strategy section. Ask it to implement `ingest.py` with a `load_documents()` function and a `chunk_text()` function that does paragraph splitting first, then fixed 500-char chunking with 100-char overlap. Verify output by printing 5 chunks and confirming none are fragments or HTML artifacts.
 
 **Milestone 4 — Embedding and retrieval:**
+Give Claude the Architecture diagram and Retrieval Approach section. Ask it to implement `embed.py` that loads chunks from `ingest.py`, embeds with all-MiniLM-L6-v2, and stores in ChromaDB with source filename metadata. Ask it to implement a `retrieve(query, k=5)` function. Verify by running 3 eval questions and checking distance scores are below 0.5.
 
 **Milestone 5 — Generation and interface:**
+Give Claude the full Architecture diagram and the grounding requirement (answer from retrieved context only, cite source filenames). Ask it to implement `generate.py` with a prompt template that enforces grounding and a `ask(question)` function returning `{answer, sources}`. Then ask it to implement `app.py` as a Gradio UI wired to `ask()`. Verify by asking an out-of-scope question and confirming the system declines rather than hallucinating.

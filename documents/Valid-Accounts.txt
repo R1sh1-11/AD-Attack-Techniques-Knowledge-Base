@@ -1,0 +1,259 @@
+Valid Accounts
+Sub-techniques (4)
+ID	Name
+T1078.001	Default Accounts
+T1078.002	Domain Accounts
+T1078.003	Local Accounts
+T1078.004	Cloud Accounts
+Adversaries may obtain and abuse credentials of existing accounts as a means of gaining Initial Access, Persistence, Privilege Escalation, or Defense Evasion. Compromised credentials may be used to bypass access controls placed on various resources on systems within the network and may even be used for persistent access to remote systems and externally available services, such as VPNs, Outlook Web Access, network devices, and remote desktop.[1] Compromised credentials may also grant an adversary increased privilege to specific systems or access to restricted areas of the network. Adversaries may choose not to use malware or tools in conjunction with the legitimate access those credentials provide to make it harder to detect their presence.
+
+In some cases, adversaries may abuse inactive accounts: for example, those belonging to individuals who are no longer part of an organization. Using these accounts may allow the adversary to evade detection, as the original account user will not be present to identify any anomalous activity taking place on their account.[2]
+
+The overlap of permissions for local, domain, and cloud accounts across a network of systems is of concern because the adversary may be able to pivot across accounts and systems to reach a high level of access (i.e., domain or enterprise administrator) to bypass access controls set within the enterprise.[3]
+
+ID: T1078
+Sub-techniques:  T1078.001, T1078.002, T1078.003, T1078.004
+ⓘ
+Tactics: Stealth, Persistence, Privilege Escalation, Initial Access
+ⓘ
+Platforms: Containers, ESXi, IaaS, Identity Provider, Linux, Network Devices, Office Suite, SaaS, Windows, macOS
+Contributors: Jon Sternstein, Stern Security; Mark Wee; Menachem Goldstein; Netskope; Praetorian; Prasad Somasamudram, McAfee; Sekhar Sarukkai, McAfee; Syed Ummar Farooqh, McAfee; Yossi Weizman, Azure Defender Research Team
+Version: 3.0
+Created: 31 May 2017
+Last Modified: 12 May 2026
+Version Permalink
+Procedure Examples
+ID	Name	Description
+C0028	2015 Ukraine Electric Power Attack	
+During the 2015 Ukraine Electric Power Attack, Sandworm Team used valid accounts on the corporate network to escalate privileges, move laterally, and establish persistence within the corporate network. [4]
+
+C0057	3CX Supply Chain Attack	
+During 3CX Supply Chain Attack, AppleJeus has gained access to the 3CX corporate environment through legitimate VPN credentials.[5]
+
+G1024	Akira	
+Akira uses valid account information to remotely access victim networks, such as VPN credentials.[6][7][8]
+
+C0062	Anthropic AI-orchestrated Campaign	
+During the Anthropic AI-orchestrated Campaign, the adversary used harvested credentials to authenticate against internal APIs, database systems, container registries, and logging infrastructure across targeted networks.[9]
+
+G0026	APT18	
+APT18 actors leverage legitimate credentials to log into external remote services.[10]
+
+G0007	APT28	
+APT28 has used legitimate credentials to gain initial access, maintain access, and exfiltrate data from a victim network. The group has specifically used credentials stolen through a spearphishing email to login to the DCCC network. The group has also leveraged default manufacturer's passwords to gain initial access to corporate networks via IoT devices such as a VOIP phone, printer, and video decoder.[11][12][13][14]
+
+G0016	APT29	
+APT29 has used a compromised account to access an organization's VPN infrastructure.[15]
+
+G0064	APT33	
+APT33 has used valid accounts for initial access and privilege escalation.[16][17]
+
+G0087	APT39	
+APT39 has used stolen credentials to compromise Outlook Web Access (OWA).[18]
+
+G0096	APT41	
+APT41 used compromised credentials to log on to other systems.[19][20]
+
+G0001	Axiom	
+Axiom has used previously compromised administrative accounts to escalate privileges.[21]
+
+G1043	BlackByte	
+BlackByte has gained access to victim environments through legitimate VPN credentials.[22]
+
+C0032	C0032	
+During the C0032 campaign, TEMP.Veles used compromised VPN accounts.[23]
+
+G0008	Carbanak	
+Carbanak actors used legitimate credentials of banking employees to perform operations that sent them millions of dollars.[24]
+
+G0114	Chimera	
+Chimera has used a valid account to maintain persistence via scheduled task.[25]
+
+G1021	Cinnamon Tempest	
+Cinnamon Tempest has used compromised user accounts to deploy payloads and create system services.[26]
+
+G0035	Dragonfly	
+Dragonfly has compromised user credentials and used valid accounts for operations.[27][28][29]
+
+S0567	Dtrack	
+Dtrack used hard-coded credentials to gain access to a network share.[30]
+
+S0038	Duqu	
+Adversaries can instruct Duqu to spread laterally by copying itself to shares it has enumerated and for which it has obtained legitimate credentials (via keylogging or other means). The remote host is then infected by using the compromised credentials to schedule a task on remote machines that executes the malware.[31]
+
+G0051	FIN10	
+FIN10 has used stolen credentials to connect remotely to victim networks using VPNs protected with only a single factor.[32]
+
+G0085	FIN4	
+FIN4 has used legitimate credentials to hijack email communications.[33][34]
+
+G0053	FIN5	
+FIN5 has used legitimate VPN, RDP, Citrix, or VNC credentials to maintain access to a victim environment.[35][36][37]
+
+G0037	FIN6	
+To move laterally on a victim network, FIN6 has used credentials stolen from various systems on which it gathered usernames and password hashes.[38][39][40]
+
+G0046	FIN7	
+FIN7 has harvested valid administrative credentials for lateral movement.[41]
+
+G0061	FIN8	
+FIN8 has used valid accounts for persistence and lateral movement.[42]
+
+G0117	Fox Kitten	
+Fox Kitten has used valid credentials with various services during lateral movement.[43]
+
+G0093	GALLIUM	
+GALLIUM leveraged valid accounts to maintain access to a victim network.[44]
+
+C0038	HomeLand Justice	
+During HomeLand Justice, threat actors used a compromised Exchange account to search mailboxes and create new Exchange accounts.[45]
+
+G1032	INC Ransom	
+INC Ransom has used compromised valid accounts for access to victim environments.[46][47][48][49]
+
+G0119	Indrik Spider	
+Indrik Spider has used valid accounts for initial access and lateral movement.[50] Indrik Spider has also maintained access to the victim environment through the VPN infrastructure.[50]
+
+S0604	Industroyer	
+Industroyer can use supplied user credentials to execute processes and stop services.[51]
+
+G0004	Ke3chang	
+Ke3chang has used credential dumpers or stealers to obtain legitimate credentials, which they used to gain access to victim accounts.[52]
+
+S0599	Kinsing	
+Kinsing has used valid SSH credentials to access remote hosts.[53]
+
+G1004	LAPSUS$	
+LAPSUS$ has used compromised credentials and/or session tokens to gain access into a victim's VPN, VDI, RDP, and IAMs.[54][55]
+
+G0032	Lazarus Group	
+Lazarus Group has used administrator credentials to gain access to restricted network segments.[56]
+
+G0065	Leviathan	
+Leviathan has obtained valid accounts to gain initial access.[57][58][59]
+
+C0049	Leviathan Australian Intrusions	
+Leviathan used captured, valid account information to log into victim web applications and appliances during Leviathan Australian Intrusions.[59]
+
+S0362	Linux Rabbit	
+Linux Rabbit acquires valid SSH accounts through brute force. [60]
+
+S9036	LP-Notes	
+LP-Notes has used stolen Windows credentials to log in as the users.[61]
+
+G1051	Medusa Group	
+Medusa Group has utilized compromised legitimate local and domain accounts within the victim environment to facilitate remote access and lateral movement sometimes in combination with PsExec.[62]
+
+G0045	menuPass	
+menuPass has used valid accounts including shared between Managed Service Providers and clients to move between the two environments.[63][64][65][66]
+
+C0002	Night Dragon	
+During Night Dragon, threat actors used compromised VPN accounts to gain access to victim systems.[67]
+
+G0049	OilRig	
+OilRig has used compromised credentials to access other systems on a victim network.[68][69][20][70]
+
+C0048	Operation MidnightEclipse	
+During Operation MidnightEclipse, threat actors extracted sensitive credentials while moving laterally through compromised networks.[71]
+
+C0014	Operation Wocao	
+During Operation Wocao, threat actors used valid VPN credentials to gain initial access.[72]
+
+G0011	PittyTiger	
+PittyTiger attempts to obtain legitimate credentials during operations.[73]
+
+G1040	Play	
+Play has used valid VPN accounts to achieve initial access.[74]
+
+G1005	POLONIUM	
+POLONIUM has used valid compromised credentials to gain access to victim environments.[75]
+
+C0056	RedPenguin	
+During RedPenguin, UNC3886 used legitimate credentials to gain priviliged access to Juniper routers.[76][77]
+
+G0034	Sandworm Team	
+Sandworm Team have used previously acquired legitimate credentials prior to attacks.[78]
+
+G1015	Scattered Spider	
+Scattered Spider has used compromised credentials for initial access.[79][80]
+
+G1041	Sea Turtle	
+Sea Turtle used compromised credentials to maintain long-term access to victim environments.[81]
+
+S0053	SeaDuke	
+Some SeaDuke samples have a module to extract email from Microsoft Exchange servers using compromised credentials.[82]
+
+G0091	Silence	
+Silence has used compromised credentials to log on to other systems and escalate privileges.[83]
+
+G0122	Silent Librarian	
+Silent Librarian has used compromised credentials to obtain unauthorized access to online accounts.[84]
+
+C0024	SolarWinds Compromise	
+During the SolarWinds Compromise, APT29 used different compromised credentials for remote access and to move laterally.[85][86][87]
+
+G1033	Star Blizzard	
+Star Blizzard has used stolen credentials to sign into victim email accounts.[88][89]
+
+G0039	Suckfly	
+Suckfly used legitimate account credentials that they dumped to navigate the internal victim network as though they were the legitimate account owner.[90]
+
+G0027	Threat Group-3390	
+Threat Group-3390 actors obtain legitimate credentials using a variety of methods and use them to further lateral movement on victim networks.[91]
+
+G1048	UNC3886	
+UNC3886 has used tools to hijack valid SSH accounts.[92]
+
+G1055	VOID MANTICORE	
+VOID MANTICORE has leveraged valid accounts to log into VPN infrastructure.[93] VOID MANTICORE has used compromised valid credentials to gain access to management infrastructure and enterprise control systems.[94] VOID MANTICORE has also validated and tested authentication using compromised credentials prior to malicious actions.[93]
+
+G1017	Volt Typhoon	
+Volt Typhoon relies primarily on valid credentials for persistence.[95]
+
+G0102	Wizard Spider	
+Wizard Spider has used valid credentials for privileged accounts with the goal of accessing domain controllers.[96][97]
+
+Mitigations
+ID	Mitigation	Description
+M1036	Account Use Policies	
+Use conditional access policies to block logins from non-compliant devices or from outside defined organization IP ranges.[98]
+
+M1015	Active Directory Configuration	
+Disable legacy authentication, which does not support MFA, and require the use of modern authentication protocols instead.
+
+M1013	Application Developer Guidance	
+Ensure that applications do not store sensitive data or credentials insecurely. (e.g. plaintext credentials in code, published credentials in repositories, or credentials in public cloud storage).
+
+M1032	Multi-factor Authentication	
+Implement multi-factor authentication (MFA) across all account types, including default, local, domain, and cloud accounts, to prevent unauthorized access, even if credentials are compromised. MFA provides a critical layer of security by requiring multiple forms of verification beyond just a password. This measure significantly reduces the risk of adversaries abusing valid accounts to gain initial access, escalate privileges, maintain persistence, or evade defenses within your network.
+
+M1027	Password Policies	
+Applications and appliances that utilize default username and password should be changed immediately after the installation, and before deployment to a production environment.[99] When possible, applications that use SSH keys should be updated periodically and properly secured.
+
+Policies should minimize (if not eliminate) reuse of passwords between different user accounts, especially employees using the same credentials for personal accounts that may not be defended by enterprise security resources.
+
+M1026	Privileged Account Management	
+Audit domain and local accounts as well as their permission levels routinely to look for situations that could allow an adversary to gain wide access by obtaining credentials of a privileged account. [3] [100] These audits should also include if default accounts have been enabled, or if new local accounts are created that have not been authorized. Follow best practices for design and administration of an enterprise network to limit privileged account use across administrative tiers. [101]
+
+M1018	User Account Management	
+Regularly audit user accounts for activity and deactivate or remove any that are no longer needed.
+
+M1017	User Training	
+Applications may send push notifications to verify a login as a form of multi-factor authentication (MFA). Train users to only accept valid push notifications and to report suspicious push notifications.
+
+Detection Strategy
+ID	Name	Analytic ID	Analytic Description
+DET0560	Detection of Valid Account Abuse Across Platforms	AN1543	
+Detection of compromised or misused valid accounts via anomalous logon patterns, abnormal logon types, and inconsistent geographic or time-based activity across Windows endpoints.
+
+AN1544	
+Detection of valid account misuse through SSH logins, sudo/su abuse, and service account anomalies outside expected patterns.
+
+AN1545	
+Detection of interactive and remote logins by service accounts or users at unusual times, with unexpected child process activity.
+
+AN1546	
+Detection of valid account abuse in IdP logs via geographic anomalies, impossible travel, risky sign-ins, and multiple MFA attempts or failures.
+
+AN1547	
+Detection of containerized service accounts or compromised kubeconfigs being used for cluster access from unexpected nodes or IPs.

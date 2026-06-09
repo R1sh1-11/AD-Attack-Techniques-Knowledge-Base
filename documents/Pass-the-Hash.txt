@@ -1,0 +1,112 @@
+Use Alternate Authentication Material: Pass the Hash
+Other sub-techniques of Use Alternate Authentication Material (4)
+ID	Name
+T1550.001	Application Access Token
+T1550.002	Pass the Hash
+T1550.003	Pass the Ticket
+T1550.004	Web Session Cookie
+Adversaries may "pass the hash" using stolen password hashes to move laterally within an environment, bypassing normal system access controls. Pass the hash (PtH) is a method of authenticating as a user without having access to the user's cleartext password. This method bypasses standard authentication steps that require a cleartext password, moving directly into the portion of the authentication that uses the password hash.
+
+When performing PtH, valid password hashes for the account being used are captured using a Credential Access technique. Captured hashes are used with PtH to authenticate as that user. Once authenticated, PtH may be used to perform actions on local or remote systems.
+
+Adversaries may also use stolen password hashes to "overpass the hash." Similar to PtH, this involves using a password hash to authenticate as a user but also uses the password hash to create a valid Kerberos ticket. This ticket can then be used to perform Pass the Ticket attacks.[1]
+
+ID: T1550.002
+Sub-technique of:  T1550
+ⓘ
+Tactic: Lateral Movement
+ⓘ
+Platforms: Windows
+Contributors: Blake Strom, Microsoft 365 Defender; Travis Smith, Tripwire
+Version: 2.0
+Created: 30 January 2020
+Last Modified: 12 May 2026
+Version Permalink
+Procedure Examples
+ID	Name	Description
+C0063	2025 Poland Wiper Attacks	
+During the 2025 Poland Wiper Attacks, the adversaries attempted to reuse password hash values to gain access to other systems.[2]
+
+G0006	APT1	
+The APT1 group is known to have used pass the hash.[3]
+
+G0007	APT28	
+APT28 has used pass the hash for lateral movement.[4]
+
+G0050	APT32	
+APT32 has used pass the hash for lateral movement.[5]
+
+G0096	APT41	
+APT41 uses tools such as Mimikatz to enable lateral movement via captured password hashes.[6]
+
+G0143	Aquatic Panda	
+Aquatic Panda used a registry edit to enable a Windows feature called RestrictedAdmin in victim environments. This change allowed Aquatic Panda to leverage "pass the hash" mechanisms as the alteration allows for RDP connections with a valid account name and hash only, without possessing a cleartext password value.[7]
+
+S1081	BADHATCH	
+BADHATCH can perform pass the hash on compromised machines with x64 versions.[8]
+
+G0114	Chimera	
+Chimera has dumped password hashes for use in pass the hash authentication attacks.[9]
+
+S0154	Cobalt Strike	
+Cobalt Strike can perform pass the hash.[10]
+
+S0488	CrackMapExec	
+CrackMapExec can pass the hash to authenticate via SMB.[11]
+
+G1003	Ember Bear	
+Ember Bear has used pass-the-hash techniques for lateral movement in victim environments.[12]
+
+S0363	Empire	
+Empire can perform pass the hash attacks.[13]
+
+G1016	FIN13	
+FIN13 has used the PowerShell utility Invoke-SMBExec to execute the pass the hash method for lateral movement within an compromised environment.[14]
+
+G0093	GALLIUM	
+GALLIUM used dumped hashes to authenticate to other machines via pass the hash.[15]
+
+S0376	HOPLIGHT	
+HOPLIGHT has been observed loading several APIs associated with Pass the Hash.[16]
+
+G0094	Kimsuky	
+Kimsuky has used pass the hash for authentication to remote access software used in C2.[17]
+
+S0002	Mimikatz	
+Mimikatz's SEKURLSA::Pth module can impersonate a user, with only a password hash, to execute arbitrary commands.[18][19][20]
+
+C0002	Night Dragon	
+During Night Dragon, threat actors used pass-the-hash tools to obtain authenticated access to sensitive internal desktops and servers.[21]
+
+C0061	Operation Digital Eye	
+During Operation Digital Eye, threat actors used a pass-the-hash capability to move laterally.[22]
+
+S0122	Pass-The-Hash Toolkit	
+Pass-The-Hash Toolkit can perform pass the hash.[3]
+
+S0378	PoshC2	
+PoshC2 has a number of modules that leverage pass the hash for lateral movement.[23]
+
+G0102	Wizard Spider	
+Wizard Spider has used the Invoke-SMBExec PowerShell cmdlet to execute the pass-the-hash technique and utilized stolen password hashes to move laterally.[24]
+
+Mitigations
+ID	Mitigation	Description
+M1026	Privileged Account Management	
+Limit credential overlap across systems to prevent the damage of credential compromise and reduce the adversary's ability to perform Lateral Movement between systems.
+
+M1051	Update Software	
+Apply patch KB2871997 to Windows 7 and higher systems to limit the default access of accounts in the local administrator group.[25]
+
+M1052	User Account Control	
+Enable pass the hash mitigations to apply UAC restrictions to local accounts on network logon. The associated Registry key is located HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\LocalAccountTokenFilterPolicy.
+
+Through GPO: Computer Configuration > [Policies] > Administrative Templates > SCM: Pass the Hash Mitigations: Apply UAC restrictions to local accounts on network logons.[26]
+
+M1018	User Account Management	
+Do not allow a domain user to be in the local administrator group on multiple systems.
+
+Detection Strategy
+ID	Name	Analytic ID	Analytic Description
+DET0409	Detection Strategy for T1550.002 - Pass the Hash (Windows)	AN1144	
+Detects anomalous NTLM LogonType 3 authentications that occur without accompanying domain logon events, especially from lateral systems or involving built-in administrative tools. Monitors for mismatches between source user context and system being accessed. Correlates LogonSession creation, NTLM authentications, and process/service initiation to identify suspicious use of stolen password hashes for remote access or service logon without password entry. Detects overpass-the-hash by combining Kerberos ticket issuance with NTLM-based lateral movement.
