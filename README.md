@@ -4,7 +4,7 @@
 
 ## Domain
 
-This system covers Active Directory attack techniques and defenses, drawn from MITRE ATT&CK technique pages and a CISA advisory. This knowledge is valuable for security practitioners and students who need to quickly answer operational questions like "how is this attack detected?" or "what mitigations exist?" — but finding answers requires manually cross-referencing dozens of scattered technical pages. This RAG system makes that knowledge searchable in plain language.
+This system covers Active Directory attack techniques and defenses, drawn from MITRE ATT&CK technique pages and a CISA advisory. This knowledge is valuable for security practitioners and students who need to quickly answer operational questions like "how is this attack detected?" or "what mitigations exist?" : but finding answers requires manually cross-referencing dozens of scattered technical pages. This RAG system makes that knowledge searchable in plain language.
 
 ---
 
@@ -31,7 +31,7 @@ This system covers Active Directory attack techniques and defenses, drawn from M
 
 **Overlap:** 100 characters
 
-**Why these choices fit your documents:** MITRE pages are structured into discrete sections (description, procedure examples, mitigations, detections). The pipeline first splits on paragraph boundaries (`\n\n`) to respect those natural section breaks, then applies fixed 500-character chunking with 100-character overlap within paragraphs that exceed that size. Overlap ensures information spanning a chunk boundary — such as a mitigation that references the attack described just before it — is not lost. A minimum length filter of 150 characters was applied to remove short APT reference rows (e.g. "APT41 uses Mimikatz") that carried no semantic signal and degraded retrieval quality.
+**Why these choices fit your documents:** MITRE pages are structured into discrete sections (description, procedure examples, mitigations, detections). The pipeline first splits on paragraph boundaries (`\n\n`) to respect those natural section breaks, then applies fixed 500-character chunking with 100-character overlap within paragraphs that exceed that size. Overlap ensures information spanning a chunk boundary such as a mitigation that references the attack described just before it is not lost. A minimum length filter of 150 characters was applied to remove short APT reference rows (e.g. "APT41 uses Mimikatz") that carried no semantic signal and degraded retrieval quality.
 
 **Final chunk count:** 198 chunks across 10 documents
 
@@ -75,7 +75,7 @@ Always end your response with a Sources section listing the filenames the answer
 
 **What the system returned:** "I don't have enough information on that."
 
-**Root cause (tied to a specific pipeline stage):** The failure originates in the chunking and retrieval stages. Pass-the-Hash detection content exists in the documents but is distributed across multiple short chunks — each chunk contains only a fragment of the detection logic (one chunk mentions NTLM monitoring, another mentions logon event correlation). No single chunk contained enough detection-specific semantic signal for the embedding model to rank it highly against a detection-focused query. The top-5 retrieved chunks were dominated by procedural description chunks rather than detection content, leaving the LLM with insufficient context to answer.
+**Root cause (tied to a specific pipeline stage):** The failure originates in the chunking and retrieval stages. Pass-the-Hash detection content exists in the documents but is distributed across multiple short chunks where each chunk contains only a fragment of the detection logic (one chunk mentions NTLM monitoring, another mentions logon event correlation). No single chunk contained enough detection-specific semantic signal for the embedding model to rank it highly against a detection-focused query. The top-5 retrieved chunks were dominated by procedural description chunks rather than detection content, leaving the LLM with insufficient context to answer.
 
 **What you would change to fix it:** Increasing chunk size for detection and mitigation sections specifically, or using section-aware chunking that keeps entire "Detection" and "Mitigation" sections as single chunks regardless of length, would likely fix this. Alternatively, supplementing MITRE pages with richer third-party writeups (e.g. SpecterOps or harmj0y blog posts) would give the embedding model more detection-specific content to retrieve from.
 
@@ -83,9 +83,9 @@ Always end your response with a Sources section listing the filenames the answer
 
 ## Spec Reflection
 
-**One way the spec helped you during implementation:** The chunking strategy section of planning.md forced an early decision to use paragraph-based splitting rather than naive fixed-size splitting. This directly shaped the implementation — when retrieval quality was poor, the spec gave a clear diagnosis framework: the issue was chunk content quality, not retrieval architecture. Without having thought through chunking before coding, debugging would have been much harder.
+**One way the spec helped you during implementation:** The chunking strategy section of planning.md forced an early decision to use paragraph-based splitting rather than naive fixed-size splitting. This directly shaped the implementation when retrieval quality was poor, the spec gave a clear diagnosis framework: the issue was chunk content quality, not retrieval architecture. Without having thought through chunking before coding, debugging would have been much harder.
 
-**One way your implementation diverged from the spec, and why:** The spec anticipated clean paragraph-based chunking would produce high-quality retrievable chunks. In practice, MITRE pages are table-heavy with minimal prose, meaning most chunks were short structured rows rather than explanatory paragraphs. A 150-character minimum filter had to be added post-hoc to remove low-signal chunks — this was not in the original spec but was necessary after seeing retrieval results dominated by APT reference one-liners.
+**One way your implementation diverged from the spec, and why:** The spec anticipated clean paragraph-based chunking would produce high-quality retrievable chunks. In practice, MITRE pages are table-heavy with minimal prose, meaning most chunks were short structured rows rather than explanatory paragraphs. A 150-character minimum filter had to be added post-hoc to remove low-signal chunks as this was not in the original spec but was necessary after seeing retrieval results dominated by APT reference one-liners.
 
 ---
 
