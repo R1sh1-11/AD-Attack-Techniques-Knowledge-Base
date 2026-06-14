@@ -58,7 +58,7 @@ def build_chunks(documents):
     for doc in documents:
         chunks = chunk_text(doc["text"])
         for i, chunk in enumerate(chunks):
-            if len(chunk) > 150:  # ADD THIS LINE
+            if len(chunk) > 150:
                 all_chunks.append({
                     "source": doc["source"],
                     "chunk_index": i,
