@@ -1,6 +1,6 @@
 # The Unofficial Guide — Project 1
-Built for CodePath AI 201, Project 1. I built the retrieval pipeline, chunking strategy, and evaluation.
 ---
+Built for CodePath AI 201, Project 1. I built the retrieval pipeline, chunking strategy, and evaluation.
 
 ## Domain
 
